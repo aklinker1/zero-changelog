@@ -1,0 +1,10 @@
+name: Zero Changelog - Summarize Unreleased Commits
+description: List commits since the latest release and output a summary
+author: Aaron Klinker
+
+inputs:
+  # TODO
+
+runs:
+  using: node24
+  main: ../dist/summarize-unreleased-commits.mjs

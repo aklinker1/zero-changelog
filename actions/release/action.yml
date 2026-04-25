@@ -1,0 +1,33 @@
+name: Zero Changelog - Release
+description: Bump version, update changelog, and create a release.
+author: Aaron Klinker
+
+inputs:
+  additionalDirs:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  bump:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  commitTemplate:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  dryRun:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  since:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  dryRunPublishCommands:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  path:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  publishCommands:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  releaseArtifacts:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  releaseTitleTemplate:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  tagPrefix:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  versionFiles:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+
+runs:
+  using: node24
+  main: ../dist/release.mjs

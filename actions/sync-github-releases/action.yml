@@ -1,0 +1,10 @@
+name: Zero Changelog - Sync GitHub Releases
+description: Sync GitHub releases based on CHANGELOG.md
+author: Aaron Klinker
+
+inputs:
+  # TODO
+
+runs:
+  using: node24
+  main: ../dist/sync-github-releases.mjs
