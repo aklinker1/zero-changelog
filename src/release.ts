@@ -69,6 +69,10 @@ export type ReleaseOptions = {
   /**
    * Additional directories to include commits from when computing the version bump.
    *
+   * > **IMPORTANT**: You may use glob patterns for ONLY the github action. They are not automatically
+   * > expanded when using the JS API. If you use the JS API and want to use glob patterns, [install a
+   * > glob pattern library](https://www.npmjs.com/search?q=glob) and call it yourself.
+   *
    * JS Usage:
    *
    * ```ts
@@ -285,6 +289,10 @@ export type ReleaseOptions = {
    * - If none of the files exist, an error will be thrown.
    * - If the file is not present, the path will be logged.
    *
+   * > **IMPORTANT**: You may use glob patterns for ONLY the github action. They are not automatically
+   * > expanded when using the JS API. If you use the JS API and want to use glob patterns, [install a
+   * > glob pattern library](https://www.npmjs.com/search?q=glob) and call it yourself.
+   *
    * JS Usage:
    *
    * ```ts
@@ -309,6 +317,10 @@ export type ReleaseOptions = {
 
   /**
    * List of paths to artifacts to upload on the github release. Does NOT support globs.
+   *
+   * > **IMPORTANT**: You may use glob patterns for ONLY the github action. They are not automatically
+   * > expanded when using the JS API. If you use the JS API and want to use glob patterns, [install a
+   * > glob pattern library](https://www.npmjs.com/search?q=glob) and call it yourself.
    *
    * JS Usage:
    *

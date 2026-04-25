@@ -22,7 +22,11 @@ bun add @aklinker1/zero-changelog
 
 ## Options
 
-TODO
+Refer to the API reference:
+
+- [Release](https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions)
+- [Sync Releases](https://jsr.io/@aklinker1/zero-ioc/doc/sync-releases/~/SyncReleasesOptions)
+- [Summarize Unreleased Commits](https://jsr.io/@aklinker1/zero-ioc/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions)
 
 ## Usage
 
@@ -68,16 +72,10 @@ Sync Releases:
 1. Parse changelog
 2. Update each release to match changelog
 
-Summarize unreleased changes
+Summarize Unreleased Changes:
 
 1. List commits in each directory since the last commit
 2. Print and return the summary
-
-GitHub Actions?
-
-- Release
-- Sync Releases
-- Summarize unreleased
 
 ## TODO
 
