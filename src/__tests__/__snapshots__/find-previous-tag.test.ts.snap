@@ -1,0 +1,11 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`findPreviousTag wxt-i18n-v.log 1`] = `"i18n-v0.2.5"`;
+
+exports[`findPreviousTag wxt-unknown-v.log 1`] = `undefined`;
+
+exports[`findPreviousTag wxt-v.log 1`] = `"v0.18.4"`;
+
+exports[`findPreviousTag wxt-wxt-v.log 1`] = `"wxt-v0.20.18"`;
+
+exports[`findPreviousTag zero-ioc-v.log 1`] = `"v1.5.1"`;

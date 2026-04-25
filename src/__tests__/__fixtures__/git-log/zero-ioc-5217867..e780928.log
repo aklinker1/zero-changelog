@@ -1,0 +1,10 @@
+e780928d469a73cbd9b0853f3a140610b146f20eAaronaaronklinker1@gmail.com2025-04-16T23:56:23-05:00chore(release): v1.0.1
+433d0d75cb3f521bc3bafe111f46d9ab0dc93a50Aaronaaronklinker1@gmail.com2025-04-16T23:55:02-05:00docs: Update jsdoc
+6cfeaa0aaad691bc6502a8a49dbfe26628020e04Aaronaaronklinker1@gmail.com2025-04-16T23:20:45-05:00chore: Setup NPM and JSR publishing
+ad06d369a3529dbf1f8204c76a507547195022c7Aaronaaronklinker1@gmail.com2025-04-16T23:51:21-05:00docs: Update README.md
+476e4e0de394d9d505dbc79592f83e02087d63a3Aaronaaronklinker1@gmail.com2025-04-16T23:50:06-05:00docs: Update README.md
+0fbf387d1ab78f2f2344441f3860dcb01a7dfb6eAaronaaronklinker1@gmail.com2025-04-16T23:49:42-05:00docs: Update README
+4aaafb5f133c9764dca5cb9ad77b05ebbdeb7f11Aaronaaronklinker1@gmail.com2025-04-16T23:48:40-05:00docs: Update README.md
+641382ee07ecebfc019c81e227f4981f79cb614fAaronaaronklinker1@gmail.com2025-04-16T23:01:19-05:00docs: Update package name
+5ec532520263717a9661dedd3a09ec40f8c4fe84Aaronaaronklinker1@gmail.com2025-04-16T23:00:24-05:00chore: Remove `.DS_Store`
+59c0713ccc2bf8baeeb2a2cf4e0e9c1cb57cbb9fAaronaaronklinker1@gmail.com2025-04-16T22:59:55-05:00feat: `createIocContainer`

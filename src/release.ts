@@ -365,7 +365,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   // 2. Collect relevant commits
 
   const since = options.since ?? (await findPreviousTag(tagPrefix));
-  const commits = listCommitsSince({ since, dirs: [path, ...additionalDirs] });
+  const commits = await listCommitsSince({ since, dirs: [path, ...additionalDirs] });
 
   // 3. Create release notes
 

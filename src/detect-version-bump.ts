@@ -1,6 +1,8 @@
-import type { Change } from "./change";
+import type { ConventionalCommit } from "./conventional-commit";
 
-export function detectVersionBump(_changes: Change[]): "major" | "minor" | "patch" {
+export function detectVersionBump(
+  _conventionalCommits: ConventionalCommit[],
+): "major" | "minor" | "patch" {
   console.log("Detecting version bump based on changes...");
   throw Error("TODO");
 }

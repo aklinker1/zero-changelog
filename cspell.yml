@@ -1,9 +1,12 @@
 ignorePaths:
   - "**/node_modules"
   - "**/dist"
+  - src/__tests__/__fixtures__/**/*.log
+  - "**/__snapshots__"
 words:
   - aklinker
   - klinker
   - nullably
   - oxfmt
   - oxlint
+  - unimport

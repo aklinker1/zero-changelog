@@ -1,5 +1,5 @@
-import type { Change } from "./change";
+import type { ConventionalCommit } from "./conventional-commit";
 
-export function getReleaseNotes(_changes: Change[]): string {
+export function getReleaseNotes(_conventionalCommits: ConventionalCommit[]): string {
   throw Error("TODO");
 }

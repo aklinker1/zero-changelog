@@ -1,0 +1,4 @@
+42047246358a98fb1f910ef2e16f210e46c6b9a0Smit11639260+sm17p@users.noreply.github.com2026-02-22T15:15:16-05:00fix: Improve background script detection logic for analytics package (#1808)Co-authored-by: Aaron <aaronklinker1@gmail.com>
+636cf1f8415f938659e3213c8c42ddc729f3aa22Aaronaaronklinker1@gmail.com2026-02-21T14:19:43-06:00fix: Allow `userId` option to return `undefined`
+3b154508bd0d454ac271aa3447a4c7866167ca7bPatryk Kuniczakp.kuniczak@gmail.com2026-02-21T21:20:42+01:00chore: Created new types, instead of `any` for `analytics` (#2119)
+430a3acfeb25410d07e0ca48981a6f819762f29dsheng zhang79007994+Arktomson@users.noreply.github.com2026-02-21T23:38:42+08:00fix: Add `getAppConfig` as an alias to `useAppConfig` (#2144)Co-authored-by: Aaron <aaronklinker1@gmail.com>

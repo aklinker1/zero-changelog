@@ -1,2 +1,1 @@
-async function e() {}
-export { e as run };
+async function e(){}export{e as run};

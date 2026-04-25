@@ -1,0 +1,10 @@
+3417bd3ed27d2e52e6b906393e0329565256f0e7Nick Doannickbar01234@gmail.com2026-02-10T23:57:27-05:00feat: Add log `--level` cli option (#1973)Co-authored-by: nickbar01234 <nickbar01234gmail.com>
+Co-authored-by: Aaron <aaronklinker1@gmail.com>
+9470d2b6968300d9d4a0abfecc0f9a776c00c0cdPatryk Kuniczakp.kuniczak@gmail.com2026-02-10T19:23:19+01:00fix: rename `name` to `names` prop of `rollup` to fix deprecated warning (#2106)
+75f01db54365ff3dee5ebe82211ba29e82fc6053Aaronaaronklinker1@gmail.com2026-02-09T02:09:51-06:00refactor: Simplify import paths (#2093)Co-authored-by: Patryk Kuniczak <p.kuniczak@gmail.com>
+19456ec855f8f357d87e6bda66ad760f7fbdff6bwotan-allfatherwotan-ai@proton.me2026-02-09T07:28:26Zfeat(popup): Add Firefox `default_area` and `theme_icons` support (#2097)Co-authored-by: Aaron <aaronklinker1@gmail.com>
+2c57840c447f57a84a74024e072369c0da16574fAaronaaronklinker1@gmail.com2026-02-09T00:44:07-06:00revert: Use `uiContainer` to apply position when creating shadow root ui (#2036)This reverts commit 26b7927f629122412e52be94596bfe9cf2b0b3db.
+
+26b7927f629122412e52be94596bfe9cf2b0b3dbNamu535248+namuorg@users.noreply.github.com2026-02-09T19:32:35+13:00fix: Use `uiContainer` to apply position when creating shadow root ui (#2036)Co-authored-by: Namu <535248+namukang@users.noreply.github.com>
+Co-authored-by: Aaron <aaronklinker1@gmail.com>
+3a3953edf682d240e3cf04c364e10fb166c1559dPatryk Kuniczakp.kuniczak@gmail.com2026-02-08T09:18:49+01:00feat: Export `normalizePath` from `wxt` module (#2080)
