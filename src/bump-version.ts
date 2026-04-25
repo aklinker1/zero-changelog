@@ -1,11 +1,19 @@
 export type VersionBump = (string & {}) | "major" | "minor" | "patch";
 
+/**
+ * Bumps the version by the specified amount (`bump: "major" | "minor" | "patch"`), or sets the
+ * version to a specific value (`bump: "1.2.4"`).
+ *
+ * > **NOTE**: This function does not take into consideration if the current version is in prerelease
+ * > (0.X.Y). During prerelease, conventional commit tools "lower" the bump type from `"major"` →
+ * > `"minor"` and `"minor"` → `"patch"`. _**This function is not responsible for this logic**_; it
+ * > just bumps the version exactly as described. See `detectVersionBump` for this logic.
+ *
+ * @example
+ *   bumpVersion("1.2.3", "major"); // "2.0.0" bumpVersion("1.2.3", "minor"); // "1.3.0"
+ *   bumpVersion("1.2.3", "patch"); // "1.2.4" bumpVersion("1.2.3", "1.3.4"); // "1.3.4"
+ */
 export function bumpVersion(currentVersion: string, bump: VersionBump): string {
-  if (currentVersion.startsWith("0.")) {
-    if (bump === "major") bump = "minor";
-    else if (bump === "minor") bump = "patch";
-  }
-
   const parts = currentVersion.split(".");
   validateSemver("current", parts);
 

@@ -341,6 +341,16 @@ export type ReleaseOptions = {
    * ```
    */
   releaseArtifacts?: string[];
+
+  /**
+   * When `true`, throw an error if no commits contain semver changes. When `false` or `undefined`,
+   * use `bump: "patch"` when no changes are detected.
+   *
+   * > IMPORTANT**: This option is only effective when the {@link ReleaseOptions#bump} is `undefined`.
+   *
+   * @default false
+   */
+  throwOnNoChanges?: boolean;
 };
 
 export type ReleaseMeta = {
@@ -364,6 +374,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     releaseTitleTemplate = "{{tag}}",
     versionFiles = ["package.json", "jsr.json", "deno.json", "Cargo.toml"],
     releaseArtifacts = [],
+    throwOnNoChanges = false,
   } = options;
   const cwd = process.cwd();
   const path = options.path ? resolve(options.path) : cwd;
@@ -386,7 +397,9 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   // 4. Bump version
 
-  const bump = options.bump ?? detectVersionBump(changes);
+  const bump =
+    (options.bump?.trim() || undefined) ??
+    detectVersionBump(currentVersion, changes, throwOnNoChanges);
   const version = bumpVersion(currentVersion, bump);
   const tag = tagPrefix + version;
   await updateVersionFiles(path, versionFiles, version);

@@ -5,8 +5,8 @@ import { bumpVersion } from "../bump-version";
 describe("bumpVersion", () => {
   it.each([
     // Pre v1.0
-    { version: "0.0.0", bump: "major", expected: "0.1.0" },
-    { version: "0.0.0", bump: "minor", expected: "0.0.1" },
+    { version: "0.0.0", bump: "major", expected: "1.0.0" },
+    { version: "0.0.0", bump: "minor", expected: "0.1.0" },
     { version: "0.0.0", bump: "patch", expected: "0.0.1" },
     { version: "0.0.0", bump: "1.0.0", expected: "1.0.0" },
 

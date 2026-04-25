@@ -1,5 +1,6 @@
 import { createFactory } from "@aklinker1/zero-factory";
 
+import type { ConventionalCommit } from "../conventional-commit";
 import type { GitCommit } from "../git-commit";
 
 export const gitCommitFactory = createFactory<GitCommit>({
@@ -11,4 +12,13 @@ export const gitCommitFactory = createFactory<GitCommit>({
   body: undefined,
   date: new Date(),
   subject: "chore: Test commit",
+});
+
+export const conventionalCommitFactory = createFactory<ConventionalCommit>({
+  description: "This is a test message",
+  footers: [],
+  isBreaking: false,
+  type: "test",
+  body: undefined,
+  scope: undefined,
 });

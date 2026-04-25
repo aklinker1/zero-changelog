@@ -90,6 +90,13 @@
     "./update-version-files": {
       "types": "./dist/update-version-files.d.mts",
       "default": "./dist/update-version-files.mjs"
+    },
+    "./version-bump": {
+      "types": "./dist/version-bump.d.mts"
+    },
+    "./semver-types/aklinker1": {
+      "types": "./dist/semver-types/aklinker1.d.mts",
+      "default": "./dist/semver-types/aklinker1.mjs"
     }
   },
   "scripts": {
@@ -97,7 +104,7 @@
     "test": "bun test",
     "test:watch": "bun test --watch",
     "build": "bun run --sequential 'build:*'",
-    "build:npm": "tsdown src/*.ts --dts.tsgo",
+    "build:npm": "tsdown src/*.ts src/semver-types/*.ts --dts.tsgo",
     "build:actions": "tsdown src/actions/*.ts --minify --d actions/dist",
     "prepack": "bun run build:npm"
   },

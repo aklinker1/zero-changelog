@@ -18,6 +18,7 @@ export async function run(): Promise<void> {
     releaseTitleTemplate: getInput("releaseTitleTemplate"),
     tagPrefix: getInput("tagPrefix"),
     versionFiles: await getFilesInput("versionFiles"),
+    throwOnNoChanges: getBooleanInput("throwOnNoChanges"),
   };
 
   const res = await release(options);
