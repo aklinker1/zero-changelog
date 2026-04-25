@@ -16,7 +16,7 @@ bun add @aklinker1/zero-changelog
 
 - 📦 Zero dependencies, [e18e](https://e18e.dev) first
 - 🏗️ Monorepo & sub-directory support
-- 🛠️ CLI, JS API, Github Action
+- 🛠️ Github Action, JS API, CLI
 - 🚀 Runs custom publish scripts
 - 📊 Summarize unreleased changes
 
@@ -30,6 +30,14 @@ Refer to the API reference:
 
 ## Usage
 
+### GitHub Action
+
+```yml
+- uses: aklinker1/zero-changelog/actions/release@1.0.0
+  with:
+    # options...
+```
+
 ### JS API
 
 ```ts
@@ -40,19 +48,18 @@ await release({
 });
 ```
 
-### GitHub Action
-
-```yml
-- uses: aklinker1/zero-changelog/actions/release@1.0.0
-  with:
-    # options...
-```
-
 ### CLI
 
 > TODO: CLI not implemented yet.
 
-Run the command with `--help` to see available options.
+Run any command with `--help` to see available options.
+
+```sh
+bun zero-changelog --help
+bun zero-changelog release --help
+bun zero-changelog sync-releases --help
+bun zero-changelog summarize-unreleased-changes --help
+```
 
 ## Plan
 

@@ -103,6 +103,7 @@
   },
   "devDependencies": {
     "@actions/core": "^3.0.0",
+    "@actions/glob": "^0.7.0",
     "@aklinker1/check": "^2.4.0",
     "@aklinker1/zero-factory": "^1.2.1",
     "@types/bun": "latest",

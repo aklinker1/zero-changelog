@@ -2,10 +2,11 @@ import { getBooleanInput, getInput, getMultilineInput, setOutput } from "@action
 
 import type { NullablyRequired } from "../internal/utils";
 import { release, type ReleaseOptions } from "../release";
+import { getFilesInput } from "./internal/get-files-input";
 
 export async function run(): Promise<void> {
   const options: NullablyRequired<ReleaseOptions> = {
-    additionalDirs: getMultilineInput("additionalDirs"),
+    additionalDirs: await getFilesInput("additionalDirs"),
     bump: getInput("bump"),
     commitTemplate: getInput("commitTemplate"),
     dryRun: getBooleanInput("dryRun"),
@@ -13,10 +14,10 @@ export async function run(): Promise<void> {
     dryRunPublishCommands: getMultilineInput("dryRunPublishCommands"),
     path: getInput("path"),
     publishCommands: getMultilineInput("publishCommands"),
-    releaseArtifacts: getMultilineInput("releaseArtifacts"),
+    releaseArtifacts: await getFilesInput("releaseArtifacts"),
     releaseTitleTemplate: getInput("releaseTitleTemplate"),
     tagPrefix: getInput("tagPrefix"),
-    versionFiles: getMultilineInput("versionFiles"),
+    versionFiles: await getFilesInput("versionFiles"),
   };
 
   const res = await release(options);
