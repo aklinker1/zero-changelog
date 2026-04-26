@@ -17,6 +17,7 @@ describe("parseCommit", () => {
         body: undefined,
         isBreaking: false,
         footers: [],
+        authors: [commit.author],
       });
     });
   });
@@ -34,6 +35,7 @@ describe("parseCommit", () => {
         body: undefined,
         isBreaking: true,
         footers: [],
+        authors: [commit.author],
       });
     });
   });
@@ -51,6 +53,7 @@ describe("parseCommit", () => {
         body: undefined,
         isBreaking: false,
         footers: [],
+        authors: [commit.author],
       });
     });
   });
@@ -68,6 +71,7 @@ describe("parseCommit", () => {
         body: undefined,
         isBreaking: true,
         footers: [],
+        authors: [commit.author],
       });
     });
   });
@@ -86,6 +90,13 @@ describe("parseCommit", () => {
         body: "Co-authored-by: Aaron <aaronklinker1@gmail.com>",
         isBreaking: false,
         footers: [{ key: "co-authored-by", value: "Aaron <aaronklinker1@gmail.com>" }],
+        authors: [
+          commit.author,
+          {
+            name: "Aaron",
+            email: "aaronklinker1@gmail.com",
+          },
+        ],
       });
     });
   });
@@ -104,6 +115,7 @@ describe("parseCommit", () => {
         body: "- Bullet point one: test\n- Bullet point two: example",
         isBreaking: false,
         footers: [],
+        authors: [commit.author],
       });
     });
   });
@@ -122,6 +134,7 @@ describe("parseCommit", () => {
         body: "BREAKING CHANGE: example breaking change",
         isBreaking: true,
         footers: [{ key: "breaking change", value: "example breaking change" }],
+        authors: [commit.author],
       });
     });
   });

@@ -3,7 +3,7 @@ import DEFAULT_TYPES from "./semver-types/aklinker1";
 
 export function getReleaseNotes(
   conventionalCommits: ConventionalCommit[],
-  since: string,
+  since: string | undefined,
   tag: string,
   repo: string,
 ): string {
@@ -16,7 +16,11 @@ export function getReleaseNotes(
     {},
   );
 
-  const lines = [`[compare changes](https://github.com/${repo}/compare/${since}...${tag})`, ""];
+  const lines: string[] = [];
+
+  if (since) {
+    lines.push(`[compare changes](https://github.com/${repo}/compare/${since}...${tag})`, "");
+  }
 
   for (const [type, details] of Object.entries(DEFAULT_TYPES)) {
     const commits = commitsByType[type];
@@ -31,13 +35,22 @@ export function getReleaseNotes(
     lines.push("");
   }
 
-  const authors = new Set(conventionalCommits.flatMap((commit) => commit.authors));
-  if (authors.size) {
-    const sorted = Array.from(authors).toSorted((a, b) => b.name.localeCompare(a.name));
+  const authors = conventionalCommits.flatMap((commit) => commit.authors);
+
+  if (authors.length) {
+    const emailNameMap = authors.reduce<Record<string, string>>((acc, author) => {
+      acc[author.name] ??= author.email;
+      return acc;
+    }, {});
+
+    const emails = new Set(
+      conventionalCommits.flatMap((commit) => commit.authors).map((author) => author.email),
+    );
+    const sortedEmails = Array.from(emails).toSorted((a, b) => b.localeCompare(a));
     lines.push("### ❤️ Contributors", "");
-    for (const author of sorted) {
+    for (const email of sortedEmails) {
       // TODO: Fetch github profiles.
-      lines.push(`- ${author.name} <${author.email}>`);
+      lines.push(`- ${emailNameMap[email]!} <${email}>`);
     }
     lines.push("");
   }

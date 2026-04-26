@@ -447,13 +447,9 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   const since = options.since ?? (await findPreviousTag(tagPrefix));
   const commits = await listCommitsSince({ since, dirs: [path, ...additionalDirs] });
-
-  // 3. Create release notes
-
   const changes = parseCommits(commits);
-  const releaseNotes = getReleaseNotes(changes);
 
-  // 4. Bump version
+  // 3. Bump version
 
   const bump = (options.bump?.trim() || undefined) ?? detectVersionBump(changes, throwOnNoChanges);
   const version = currentVersion.bump(bump);
@@ -461,6 +457,10 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   console.log("Bumping version to:", version);
   console.log("Tag:", tag);
   await updateVersionFiles(path, versionFiles, version);
+
+  // 4. Create release notes
+
+  const releaseNotes = getReleaseNotes(changes, since, tag, githubRepo);
 
   // 5. Update changelog
 

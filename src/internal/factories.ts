@@ -21,4 +21,10 @@ export const conventionalCommitFactory = createFactory<ConventionalCommit>({
   type: "test",
   body: undefined,
   scope: undefined,
+  authors: [
+    {
+      name: "aaron",
+      email: "aaron@example.com",
+    },
+  ],
 });

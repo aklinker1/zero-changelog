@@ -5,6 +5,8 @@ const SUBJECT_REGEX = /^(?<type>\w+)(\((?<scope>.*?)\))?(?<breaking>!)?:\s+(?<de
 
 const FOOTER_REGEX = /^(?<key>BREAKING CHANGE|\S+):\s+(?<value>.+)$/;
 
+const AUTHOR_REGEX = /^(?<name>.+) <(?<email>.+)>$/;
+
 /** Convert a commit to a {@link ConventionalCommit}, returning `undefined` for unknown formats */
 export function parseCommit(commit: GitCommit): ConventionalCommit | undefined {
   const titleMatch = commit.subject.match(SUBJECT_REGEX);
@@ -33,5 +35,16 @@ export function parseCommit(commit: GitCommit): ConventionalCommit | undefined {
     body: commit.body,
     isBreaking: !!breaking || footers.some((footer) => footer.key === "breaking change"),
     footers,
+    authors: [
+      commit.author,
+      ...footers
+        .filter((footer) => footer.key === "co-authored-by")
+        .map((footer) => footer.value.match(AUTHOR_REGEX)?.groups)
+        .filter((group) => group != null)
+        .map((group) => ({
+          name: group.name!,
+          email: group.email!,
+        })),
+    ],
   };
 }
