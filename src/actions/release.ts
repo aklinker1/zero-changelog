@@ -19,6 +19,8 @@ export async function run(): Promise<void> {
     tagPrefix: getInput("tagPrefix"),
     versionFiles: await getFilesInput("versionFiles"),
     throwOnNoChanges: getBooleanInput("throwOnNoChanges"),
+    githubRepo: getInput("githubRepo") as `${string}/${string}` | undefined,
+    githubToken: getInput("githubToken", { required: true }),
   };
 
   const res = await release(options);

@@ -3,5 +3,6 @@
   "jsdoc": true,
   "sortImports": true,
   "sortPackageJson": true,
+  "proseWrap": "always",
   "ignorePatterns": ["**/__snapshots__", "**/__fixtures__/*.log", "actions/dist"],
 }

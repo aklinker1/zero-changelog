@@ -1,12 +1,17 @@
+import { createReadStream, ReadStream } from "node:fs";
 import { styleText } from "node:util";
 
-export async function createGithubRelease(options: {
+type CreateGithubReleaseOptions = {
+  repo: `${string}/${string}`;
+  token: string;
   dryRun: boolean;
   tag: string;
   title: string;
   body: string;
   artifacts?: string[];
-}): Promise<void> {
+};
+
+export async function createGithubRelease(options: CreateGithubReleaseOptions): Promise<void> {
   console.log("Creating GitHub release...");
   if (options.dryRun) {
     console.log("  -> Skipping, dry run");
@@ -19,7 +24,60 @@ export async function createGithubRelease(options: {
     if (options.dryRun) {
       console.log("  -> Skipping, dry run");
     } else {
-      throw Error("TODO");
+      const artifactStreams = options.artifacts?.length
+        ? await getArtifactStreams(options.artifacts)
+        : undefined;
+      await createRelease(options);
+      if (artifactStreams) await uploadArtifacts(options, artifactStreams);
+    }
+  }
+}
+
+async function getArtifactStreams(artifacts: string[]): Promise<ReadStream[]> {
+  return Promise.all(artifacts.map((artifact) => createReadStream(artifact)));
+}
+
+async function createRelease(options: CreateGithubReleaseOptions): Promise<void> {
+  const res = await fetch(`https://api.github.com/repos/${options.repo}/releases`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${options.token}`,
+    },
+    body: JSON.stringify({
+      tag_name: options.tag,
+      name: options.title,
+      body: options.body,
+    }),
+  });
+  if (res.ok) return;
+
+  console.log("Response status: " + res.status);
+  console.log("Response body: " + (await res.text()));
+  throw Error(`Failed to create GitHub release`);
+}
+
+async function uploadArtifacts(
+  options: CreateGithubReleaseOptions,
+  artifactStreams: ReadStream[],
+): Promise<void> {
+  for (const [i, stream] of artifactStreams.entries()) {
+    const artifact = options.artifacts![i];
+    console.log("  -> Uploading ", artifact);
+    const res = await fetch(
+      `https://uploads.github.com/repos/${options.repo}/releases/tags/${options.tag}/assets`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          Authorization: `Bearer ${options.token}`,
+          "Content-Disposition": `attachment; filename="${artifact}"`,
+        },
+        body: stream,
+      },
+    );
+    if (!res.ok) {
+      console.error(`Failed to upload`, artifact, res, await res.text());
     }
   }
 }

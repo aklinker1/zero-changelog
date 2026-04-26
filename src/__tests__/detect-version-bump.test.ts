@@ -5,7 +5,6 @@ import { detectVersionBump } from "../detect-version-bump";
 import { conventionalCommitFactory } from "../internal/factories";
 
 describe("detectVersionBump", () => {
-  const currentVersion = "1.0.0";
   const throwOnNoChanges = false;
 
   describe("breaking changes", () => {
@@ -18,7 +17,7 @@ describe("detectVersionBump", () => {
         }),
       ];
 
-      const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
+      const actual = detectVersionBump(commits, throwOnNoChanges);
 
       expect(actual).toBe("major");
     });
@@ -39,26 +38,8 @@ describe("detectVersionBump", () => {
           description: "another feature",
         }),
       ];
-      const result = detectVersionBump(currentVersion, commits, throwOnNoChanges);
+      const result = detectVersionBump(commits, throwOnNoChanges);
       expect(result).toBe("major");
-    });
-
-    describe("pre-releases", () => {
-      const currentVersion = "0.2.0";
-
-      it("should return 'minor' breaking commits", () => {
-        const commits = [
-          conventionalCommitFactory({
-            type: "feat",
-            description: "some feature",
-            isBreaking: true,
-          }),
-        ];
-
-        const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
-
-        expect(actual).toBe("minor");
-      });
     });
   });
 
@@ -71,7 +52,7 @@ describe("detectVersionBump", () => {
         }),
       ];
 
-      const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
+      const actual = detectVersionBump(commits, throwOnNoChanges);
 
       expect(actual).toBe("minor");
     });
@@ -92,26 +73,9 @@ describe("detectVersionBump", () => {
         }),
       ];
 
-      const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
+      const actual = detectVersionBump(commits, throwOnNoChanges);
 
       expect(actual).toBe("minor");
-    });
-
-    describe("pre-releases", () => {
-      const currentVersion = "0.2.0";
-
-      it("should return 'patch' for feat commits", () => {
-        const commits = [
-          conventionalCommitFactory({
-            type: "feat",
-            description: "new feature",
-          }),
-        ];
-
-        const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
-
-        expect(actual).toBe("patch");
-      });
     });
   });
 
@@ -124,26 +88,9 @@ describe("detectVersionBump", () => {
         }),
       ];
 
-      const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
+      const actual = detectVersionBump(commits, throwOnNoChanges);
 
       expect(actual).toBe("patch");
-    });
-
-    describe("pre-releases", () => {
-      const currentVersion = "0.3.0";
-
-      it("should return 'patch' for fix commits ", () => {
-        const commits = [
-          conventionalCommitFactory({
-            type: "fix",
-            description: "bug fix",
-          }),
-        ];
-
-        const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
-
-        expect(actual).toBe("patch");
-      });
     });
   });
 
@@ -151,7 +98,7 @@ describe("detectVersionBump", () => {
     const commits: ConventionalCommit[] = [];
 
     it("should return 'patch'", () => {
-      const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
+      const actual = detectVersionBump(commits, throwOnNoChanges);
 
       expect(actual).toBe("patch");
     });
@@ -160,7 +107,7 @@ describe("detectVersionBump", () => {
       const throwOnNoChanges = true;
 
       it("should throw", () => {
-        expect(() => detectVersionBump(currentVersion, commits, throwOnNoChanges)).toThrow(
+        expect(() => detectVersionBump(commits, throwOnNoChanges)).toThrow(
           "No semver changes detected",
         );
       });
@@ -180,7 +127,7 @@ describe("detectVersionBump", () => {
     ];
 
     it("should return 'patch'", () => {
-      const actual = detectVersionBump(currentVersion, commits, throwOnNoChanges);
+      const actual = detectVersionBump(commits, throwOnNoChanges);
 
       expect(actual).toBe("patch");
     });
@@ -189,7 +136,7 @@ describe("detectVersionBump", () => {
       const throwOnNoChanges = true;
 
       it("should throw", () => {
-        expect(() => detectVersionBump(currentVersion, commits, throwOnNoChanges)).toThrow(
+        expect(() => detectVersionBump(commits, throwOnNoChanges)).toThrow(
           "No semver changes detected",
         );
       });

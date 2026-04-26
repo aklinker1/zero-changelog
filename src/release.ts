@@ -1,17 +1,18 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 
-import { bumpVersion, type VersionBump } from "./bump-version";
 import { createGithubRelease } from "./create-github-release";
 import { detectVersionBump } from "./detect-version-bump";
 import { findPreviousTag } from "./find-previous-tag";
 import { getCurrentVersion } from "./get-current-version";
+import { getGithubRepo } from "./get-github-repo";
 import { getReleaseNotes } from "./get-release-notes";
 import { run } from "./internal/run";
 import { template } from "./internal/utils";
 import { listCommitsSince } from "./list-commits-since";
 import { parseChangelog } from "./parse-changelog";
 import { parseCommits } from "./parse-commits";
+import { parseSemver, type BumpBy } from "./semver";
 import { serializeChangelog } from "./serialize-changelog";
 import { updateVersionFiles } from "./update-version-files";
 
@@ -43,7 +44,7 @@ export type ReleaseOptions = {
    *
    * @default undefined
    */
-  bump?: VersionBump;
+  bump?: BumpBy;
 
   /**
    * The directory to release
@@ -351,6 +352,49 @@ export type ReleaseOptions = {
    * @default false
    */
   throwOnNoChanges?: boolean;
+
+  /**
+   * The repo to create the release on.
+   *
+   * JS Usage:
+   *
+   * ```ts
+   * await release({
+   *   githubRepo: "aklinker1/zero-changelog",
+   * });
+   * ```
+   *
+   * GitHub Actions:
+   *
+   * ```yml
+   * - uses: aklinker1/zero-changelog/actions/release
+   *   with:
+   *     githubRepo: "some-other/repo" # Defaults to the current repo
+   * ```
+   */
+  githubRepo?: `${string}/${string}`;
+  /**
+   * A github API token with access to the repo for creating a release.
+   *
+   * JS Usage:
+   *
+   * ```ts
+   * await release({
+   *   githubToken: process.env.GITHUB_TOKEN!,
+   * });
+   * ```
+   *
+   * GitHub Actions:
+   *
+   * ```yml
+   * - uses: aklinker1/zero-changelog/actions/release
+   *   with:
+   *     githubToken: ${{ secrets.GITHUB_TOKEN }}
+   * ```
+   *
+   * @default process.env.GITHUB_TOKEN
+   */
+  githubToken?: string;
 };
 
 export type ReleaseMeta = {
@@ -375,15 +419,21 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     versionFiles = ["package.json", "jsr.json", "deno.json", "Cargo.toml"],
     releaseArtifacts = [],
     throwOnNoChanges = false,
+    githubToken = process.env.GITHUB_TOKEN,
+    githubRepo = await getGithubRepo(),
   } = options;
+
   const cwd = process.cwd();
   const path = options.path ? resolve(options.path) : cwd;
   const dirname = basename(path);
   const tagPrefix = path === cwd ? "v" : `${dirname}-v`;
 
+  if (!githubToken) throw Error("No github token provided");
+  if (!githubRepo) throw Error("No github repo provided");
+
   // 1. Get current version
 
-  const currentVersion = await getCurrentVersion(path, versionFiles);
+  const currentVersion = parseSemver(await getCurrentVersion(path, versionFiles));
 
   // 2. Collect relevant commits
 
@@ -397,11 +447,11 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   // 4. Bump version
 
-  const bump =
-    (options.bump?.trim() || undefined) ??
-    detectVersionBump(currentVersion, changes, throwOnNoChanges);
-  const version = bumpVersion(currentVersion, bump);
+  const bump = (options.bump?.trim() || undefined) ?? detectVersionBump(changes, throwOnNoChanges);
+  const version = currentVersion.bump(bump);
   const tag = tagPrefix + version;
+  console.log("Bumping version to:", version);
+  console.log("Tag:", tag);
   await updateVersionFiles(path, versionFiles, version);
 
   // 5. Update changelog
@@ -437,6 +487,8 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   const releaseTitle = template(releaseTitleTemplate, { version, tag, path, dirname });
   await createGithubRelease({
+    repo: githubRepo,
+    token: githubToken,
     dryRun,
     tag,
     title: releaseTitle,

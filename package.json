@@ -14,89 +14,13 @@
   ],
   "type": "module",
   "exports": {
-    "./bump-version": {
-      "types": "./dist/bump-version.d.mts",
-      "default": "./dist/bump-version.mjs"
+    "./*": {
+      "types": "./dist/*.d.mts",
+      "default": "./dist/*.mjs"
     },
-    "./conventional-commit": {
-      "types": "./dist/conventional-commit.d.mts"
-    },
-    "./changelog-section": {
-      "types": "./dist/changelog-section.d.mts"
-    },
-    "./create-github-release": {
-      "types": "./dist/create-github-release.d.mts",
-      "default": "./dist/create-github-release.mjs"
-    },
-    "./detect-version-bump": {
-      "types": "./dist/detect-version-bump.d.mts",
-      "default": "./dist/detect-version-bump.mjs"
-    },
-    "./find-previous-tag": {
-      "types": "./dist/find-previous-tag.d.mts",
-      "default": "./dist/find-previous-tag.mjs"
-    },
-    "./get-current-version": {
-      "types": "./dist/get-current-version.d.mts",
-      "default": "./dist/get-current-version.mjs"
-    },
-    "./get-github-release": {
-      "types": "./dist/get-github-release.d.mts",
-      "default": "./dist/get-github-release.mjs"
-    },
-    "./get-release-notes": {
-      "types": "./dist/get-release-notes.d.mts",
-      "default": "./dist/get-release-notes.mjs"
-    },
-    "./git-commit": {
-      "types": "./dist/git-commit.d.mts"
-    },
-    "./list-commits-since": {
-      "types": "./dist/list-commits-since.d.mts",
-      "default": "./dist/list-commits-since.mjs"
-    },
-    "./parse-changelog": {
-      "types": "./dist/parse-changelog.d.mts",
-      "default": "./dist/parse-changelog.mjs"
-    },
-    "./parse-commit": {
-      "types": "./dist/parse-commit.d.mts",
-      "default": "./dist/parse-commit.mjs"
-    },
-    "./parse-commits": {
-      "types": "./dist/parse-commits.d.mts",
-      "default": "./dist/parse-commits.mjs"
-    },
-    "./release": {
-      "types": "./dist/release.d.mts",
-      "default": "./dist/release.mjs"
-    },
-    "./serialize-changelog": {
-      "types": "./dist/serialize-changelog.d.mts",
-      "default": "./dist/serialize-changelog.mjs"
-    },
-    "./summarize-unreleased-commits": {
-      "types": "./dist/summarize-unreleased-commits.d.mts",
-      "default": "./dist/summarize-unreleased-commits.mjs"
-    },
-    "./sync-release": {
-      "types": "./dist/sync-release.d.mts",
-      "default": "./dist/sync-release.mjs"
-    },
-    "./sync-releases": {
-      "types": "./dist/sync-releases.d.mts",
-      "default": "./dist/sync-releases.mjs"
-    },
-    "./update-version-files": {
-      "types": "./dist/update-version-files.d.mts",
-      "default": "./dist/update-version-files.mjs"
-    },
-    "./version-bump": {
-      "types": "./dist/version-bump.d.mts"
-    },
-    "./semver-types/aklinker1": {
-      "types": "./dist/semver-types/aklinker1.d.mts",
-      "default": "./dist/semver-types/aklinker1.mjs"
+    "./semver-types/*": {
+      "types": "./dist/semver-types/*.d.mts",
+      "default": "./dist/semver-types/*.mjs"
     }
   },
   "scripts": {
