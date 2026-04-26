@@ -18,4 +18,8 @@ export type ConventionalCommit = {
      */
     value: string;
   }>;
+  authors: Array<{
+    name: string;
+    email: string;
+  }>;
 };
