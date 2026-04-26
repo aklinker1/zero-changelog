@@ -81,7 +81,8 @@ async function uploadArtifacts(
       },
     );
     if (!res.ok) {
-      console.error(`Failed to upload`, artifact, res, await res.text());
+      console.error(`Failed to upload`, artifact, res);
+      console.log(await res.text());
     }
   }
 }
