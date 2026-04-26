@@ -12,7 +12,7 @@ import { template } from "./internal/utils";
 import { listCommitsSince } from "./list-commits-since";
 import { parseChangelog } from "./parse-changelog";
 import { parseCommits } from "./parse-commits";
-import { parseSemver, type BumpBy } from "./semver";
+import { isPrerelease, parseSemver, type BumpBy } from "./semver";
 import { serializeChangelog } from "./serialize-changelog";
 import { updateVersionFiles } from "./update-version-files";
 
@@ -216,7 +216,7 @@ export type ReleaseOptions = {
    * ```ts
    * await release({
    *   path: "packages/my-package",
-   *   releaseTitleTemplate: "My Package {{version}}",
+   *   releaseNameTemplate: "My Package {{version}}",
    * });
    * ```
    *
@@ -226,12 +226,12 @@ export type ReleaseOptions = {
    * - uses: aklinker1/zero-changelog/actions/release
    *   with:
    *     path: "packages/my-package"
-   *     releaseTitleTemplate: "My Package {{version}}"
+   *     releaseNameTemplate: "My Package {{version}}"
    * ```
    *
    * @default "{{tag}}"
    */
-  releaseTitleTemplate?: string;
+  releaseNameTemplate?: string;
 
   /**
    * A custom publish command to run before committing and creating the release.
@@ -395,6 +395,13 @@ export type ReleaseOptions = {
    * @default process.env.GITHUB_TOKEN
    */
   githubToken?: string;
+
+  /**
+   * Set to false to prevent marking the github release as "latest"
+   *
+   * @default true
+   */
+  latestRelease?: boolean;
 };
 
 export type ReleaseMeta = {
@@ -415,12 +422,13 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     dryRun = false,
     dryRunPublishCommands,
     publishCommands,
-    releaseTitleTemplate = "{{tag}}",
+    releaseNameTemplate = "{{tag}}",
     versionFiles = ["package.json", "jsr.json", "deno.json", "Cargo.toml"],
     releaseArtifacts = [],
     throwOnNoChanges = false,
     githubToken = process.env.GITHUB_TOKEN,
     githubRepo = await getGithubRepo(),
+    latestRelease = true,
   } = options;
 
   const cwd = process.cwd();
@@ -485,15 +493,17 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   // 8. Create release
 
-  const releaseTitle = template(releaseTitleTemplate, { version, tag, path, dirname });
+  const releaseName = template(releaseNameTemplate, { version, tag, path, dirname });
   await createGithubRelease({
     repo: githubRepo,
     token: githubToken,
     dryRun,
     tag,
-    title: releaseTitle,
+    name: releaseName,
     body: releaseNotes,
     artifacts: releaseArtifacts,
+    latest: latestRelease,
+    prerelease: isPrerelease(parseSemver(version)),
   });
 
   throw Error("Not implemented");

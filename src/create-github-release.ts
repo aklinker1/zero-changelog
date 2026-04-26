@@ -6,9 +6,11 @@ type CreateGithubReleaseOptions = {
   token: string;
   dryRun: boolean;
   tag: string;
-  title: string;
+  name: string;
   body: string;
   artifacts?: string[];
+  latest: boolean;
+  prerelease: boolean;
 };
 
 export async function createGithubRelease(options: CreateGithubReleaseOptions): Promise<void> {
@@ -46,8 +48,10 @@ async function createRelease(options: CreateGithubReleaseOptions): Promise<void>
     },
     body: JSON.stringify({
       tag_name: options.tag,
-      name: options.title,
+      name: options.name,
       body: options.body,
+      make_latest: options.latest,
+      prerelease: options.prerelease,
     }),
   });
   if (res.ok) return;
