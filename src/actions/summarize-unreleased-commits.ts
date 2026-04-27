@@ -7,11 +7,12 @@ import {
   type SummarizeUnreleasedCommitsOptions,
 } from "../summarize-unreleased-commits";
 import { getFilesInput } from "./internal/get-files-input";
+import { getStringInput } from "./internal/get-string-input";
 
 try {
   const options: NullablyRequired<SummarizeUnreleasedCommitsOptions> = {
     paths: await getFilesInput("paths"),
-    tagPrefixTemplate: getInput("tagPrefixTemplate"),
+    tagPrefixTemplate: getStringInput("tagPrefixTemplate"),
   };
 
   const summaries = await summarizeUnreleasedCommits(options);

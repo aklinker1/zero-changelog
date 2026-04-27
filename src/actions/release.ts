@@ -1,8 +1,10 @@
-import { getBooleanInput, getMultilineInput, setFailed, setOutput } from "@actions/core";
+import { setFailed, setOutput } from "@actions/core";
 
 import type { NullablyRequired } from "../internal/utils";
 import { release, type ReleaseOptions } from "../release";
+import { getBoolInput } from "./internal/get-bool-input";
 import { getFilesInput } from "./internal/get-files-input";
+import { getStringArrayInput } from "./internal/get-string-array-input";
 import { getStringInput } from "./internal/get-string-input";
 
 try {
@@ -10,17 +12,17 @@ try {
     additionalDirs: await getFilesInput("additionalDirs"),
     bump: getStringInput("bump"),
     commitTemplate: getStringInput("commitTemplate"),
-    dryRun: getBooleanInput("dryRun"),
+    dryRun: getBoolInput("dryRun"),
     since: getStringInput("since"),
-    dryRunPublishCommands: getMultilineInput("dryRunPublishCommands"),
+    dryRunPublishCommands: getStringArrayInput("dryRunPublishCommands"),
     path: getStringInput("path"),
-    publishCommands: getMultilineInput("publishCommands"),
+    publishCommands: getStringArrayInput("publishCommands"),
     releaseArtifacts: await getFilesInput("releaseArtifacts"),
     releaseNameTemplate: getStringInput("releaseNameTemplate"),
-    latestRelease: getBooleanInput("latestRelease"),
+    latestRelease: getBoolInput("latestRelease"),
     tagPrefix: getStringInput("tagPrefix"),
     versionFiles: await getFilesInput("versionFiles"),
-    throwOnNoChanges: getBooleanInput("throwOnNoChanges"),
+    throwOnNoChanges: getBoolInput("throwOnNoChanges"),
     githubRepo: getStringInput("githubRepo") as `${string}/${string}` | undefined,
     githubToken: getStringInput("githubToken", { required: true }),
   };
