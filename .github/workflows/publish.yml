@@ -25,12 +25,16 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+
       - uses: ./.github/actions/setup
+
       - run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Update NPM for Provence
         run: sudo npm i -g npm@latest
+
       - name: Bump and Release
         uses: ./actions/release
         with:
