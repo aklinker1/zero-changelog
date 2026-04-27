@@ -1,8 +1,8 @@
 import { basename } from "node:path";
 
-export const PACKAGE_JSON_VERSION_REGEX = /"version":\s*?"(?<version>)"/;
-export const PACKAGE_YAML_VERSION_REGEX = /["']?version["']?:\s+?["']?(?<version>)["']?/;
-export const CARGO_TOML_VERSION_REGEX = /^version\s*=\s*"(?<version>\w*?)"/;
+export const PACKAGE_JSON_VERSION_REGEX = /"version":\s*?"(?<version>\S*?)"/;
+export const PACKAGE_YAML_VERSION_REGEX = /["']?version["']?:\s+?["']?(?<version>\S*?)["']?/;
+export const CARGO_TOML_VERSION_REGEX = /^version\s*=\s*"(?<version>\S*?)"/;
 
 export function getVersionRegexFor(versionFile: string): RegExp {
   const filename = basename(versionFile);
