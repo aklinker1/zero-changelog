@@ -20,15 +20,13 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./.github/actions/setup
       - name: Bump and Release
         uses: ./actions/release
         with:
           publishCommands: |-
             npm publish
-            bunx jsr publish
-          versionFiles: |-
-            package.json
-            jsr.json
+            bunx jsr publish --allow-dirty
           dryRun: ${{ inputs.dryRun }}
           dryRunPublishCommands: |-
             npm publish --dry-run

@@ -1,8 +1,18 @@
-import { getBooleanInput, getInput, getMultilineInput, setFailed, setOutput } from "@actions/core";
+import {
+  getBooleanInput,
+  getInput,
+  getMultilineInput,
+  info,
+  setFailed,
+  setOutput,
+} from "@actions/core";
 
 import type { NullablyRequired } from "../internal/utils";
 import { release, type ReleaseOptions } from "../release";
 import { getFilesInput } from "./internal/get-files-input";
+
+console.log("Hello world");
+info("Hello info");
 
 try {
   const options: NullablyRequired<ReleaseOptions> = {
