@@ -450,7 +450,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   const commits = await listCommitsSince({ since, dirs: [path, ...additionalDirs] });
   console.log("Commits:", commits.length);
   const conventionalCommits = parseCommits(commits);
-  console.log("Conventional commits:", conventionalCommits.length, conventionalCommits[0]);
+  console.log("Conventional commits:", conventionalCommits.length);
 
   // 3. Bump version
 

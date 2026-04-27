@@ -40,7 +40,7 @@ export function getReleaseNotes(
 
   if (authors.length) {
     const emailNameMap = authors.reduce<Record<string, string>>((acc, author) => {
-      acc[author.name] ??= author.email;
+      acc[author.email] ??= author.name;
       return acc;
     }, {});
 
