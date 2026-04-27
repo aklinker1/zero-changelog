@@ -1,0 +1,34 @@
+{
+  "$schema": "https://jsr.io/schema/config-file.v1.json",
+  "name": "@aklinker1/zero-changelog",
+  "version": "0.1.0",
+  "exports": {
+    "./conventional-commit": "./src/conventional-commit.ts",
+    "./get-github-release": "./src/get-github-release.ts",
+    "./get-release-notes": "./src/get-release-notes.ts",
+    "./summarize-unreleased-commits": "./src/summarize-unreleased-commits.ts",
+    "./list-commits-since": "./src/list-commits-since.ts",
+    "./find-previous-tag": "./src/find-previous-tag.ts",
+    "./get-github-repo": "./src/get-github-repo.ts",
+    "./detect-version-bump": "./src/detect-version-bump.ts",
+    "./parse-changelog": "./src/parse-changelog.ts",
+    "./sync-releases": "./src/sync-releases.ts",
+    "./parse-commit": "./src/parse-commit.ts",
+    "./semver-type-map": "./src/semver-type-map.ts",
+    "./changelog-section": "./src/changelog-section.ts",
+    "./release": "./src/release.ts",
+    "./git-commit": "./src/git-commit.ts",
+    "./parse-commits": "./src/parse-commits.ts",
+    "./update-version-files": "./src/update-version-files.ts",
+    "./get-current-version": "./src/get-current-version.ts",
+    "./semver-type": "./src/semver-type.ts",
+    "./semver": "./src/semver.ts",
+    "./create-github-release": "./src/create-github-release.ts",
+    "./serialize-changelog": "./src/serialize-changelog.ts",
+    "./sync-release": "./src/sync-release.ts"
+  },
+  "publish": {
+    "include": ["README.MD", "src/**/*.ts"],
+    "exclude": ["**/__tests__/**"]
+  }
+}
