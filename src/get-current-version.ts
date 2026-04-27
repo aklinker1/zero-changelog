@@ -13,6 +13,8 @@ export async function getCurrentVersion(path: string, versionFiles: string[]): P
       const text = await readFile(file, "utf8");
       const regex = getVersionRegexFor(file);
       const version = text.match(regex)?.groups?.version;
+      console.log({ versionFile, regex, version });
+      console.log(text);
 
       if (version) {
         console.log(
