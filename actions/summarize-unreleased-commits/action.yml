@@ -3,7 +3,14 @@ description: List commits since the latest release and output a summary
 author: Aaron Klinker
 
 inputs:
-  # TODO
+  paths:
+    description: |-
+      See
+      https://jsr.io/@aklinker1/zero-ioc/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions
+  tagPrefixTemplate:
+    description: |-
+      See
+      https://jsr.io/@aklinker1/zero-ioc/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions
 
 runs:
   using: node24

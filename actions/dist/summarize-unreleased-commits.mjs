@@ -1,1 +1,4 @@
-async function e(){}export{e as run};
+import{a as e,d as t,l as n,n as r,o as i,r as a,t as o}from"./get-files-input-DqIg6nWC.mjs";import{basename as s,relative as c,resolve as l}from"node:path";async function u(t){let{tagPrefixTemplate:n=`v{{dirname}}`}=t??{},o=(t?.paths?.length?t.paths:[process.cwd()]).map(e=>l(e)),u=[];for(let t of o){let o=await i(e(n,{dirname:s(t),path:c(process.cwd(),t)})),l=await a({dirs:[t],since:o}),d=r(l);u.push({commits:l,path:t,conventionalCommits:d})}return u}async function d(){let e=await u({paths:await o(`paths`),tagPrefixTemplate:n(`tagPrefixTemplate`)});t(`json`,e),t(`text`,f(e))}function f(e){return e.map(e=>p(e)).join(`
+
+`)}function p(e){return[e.path,`-`.repeat(10),`Commits (${e.commits.length} total, ${e.conventionalCommits.length} conventional)`,...e.commits.map(e=>`- ${e.subject}`)].join(`
+`)}export{d as run};

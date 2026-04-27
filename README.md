@@ -149,10 +149,10 @@ Summarize Unreleased Changes:
 ## TODO
 
 - [x] Structure for package + action
-- [ ] Implement tests
+- [x] Implement tests
 - [x] Implement git logic
 - [ ] Implement sync releases
-- [ ] Glob patterns for github action
-- [ ] Implement unreleased commit summary
+- [x] Glob patterns for github action
+- [x] Implement unreleased commit summary
 - [ ] CLI?
-- [ ] Implement alpha/beta version bumping
+- [x] Implement alpha/beta version bumping
