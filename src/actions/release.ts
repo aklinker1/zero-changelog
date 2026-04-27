@@ -1,10 +1,10 @@
-import { getBooleanInput, getInput, getMultilineInput, setOutput } from "@actions/core";
+import { getBooleanInput, getInput, getMultilineInput, setFailed, setOutput } from "@actions/core";
 
 import type { NullablyRequired } from "../internal/utils";
 import { release, type ReleaseOptions } from "../release";
 import { getFilesInput } from "./internal/get-files-input";
 
-export async function run(): Promise<void> {
+try {
   const options: NullablyRequired<ReleaseOptions> = {
     additionalDirs: await getFilesInput("additionalDirs"),
     bump: getInput("bump"),
@@ -29,4 +29,6 @@ export async function run(): Promise<void> {
   setOutput("version", res.version);
   setOutput("tag", res.tag);
   setOutput("releaseNotes", res.releaseNotes);
+} catch (err) {
+  setFailed(err instanceof Error ? err.message : String(err));
 }

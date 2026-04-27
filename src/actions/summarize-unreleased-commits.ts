@@ -1,4 +1,4 @@
-import { getInput, setOutput } from "@actions/core";
+import { getInput, setFailed, setOutput } from "@actions/core";
 
 import type { NullablyRequired } from "../internal/utils";
 import {
@@ -8,7 +8,7 @@ import {
 } from "../summarize-unreleased-commits";
 import { getFilesInput } from "./internal/get-files-input";
 
-export async function run() {
+try {
   const options: NullablyRequired<SummarizeUnreleasedCommitsOptions> = {
     paths: await getFilesInput("paths"),
     tagPrefixTemplate: getInput("tagPrefixTemplate"),
@@ -18,6 +18,8 @@ export async function run() {
 
   setOutput("json", summaries);
   setOutput("text", renderSummariesText(summaries));
+} catch (err) {
+  setFailed(err instanceof Error ? err.message : String(err));
 }
 
 function renderSummariesText(summaries: PathSummary[]): string {
