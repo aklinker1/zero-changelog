@@ -29,7 +29,7 @@
   },
   "publish": {
     "include": ["README.MD", "src/**/*.ts"],
-    "exclude": ["**/__tests__/**"]
+    "exclude": ["**/__tests__/**", "src/actions"]
   },
   "license": "MIT"
 }
