@@ -12,6 +12,12 @@ inputs:
       See
       https://jsr.io/@aklinker1/zero-ioc/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions
 
+outputs:
+  text:
+    description: Formatted text
+  json:
+    description: Full json object containing the commits and paths.
+
 runs:
   using: node24
   main: ../dist/summarize-unreleased-commits.mjs

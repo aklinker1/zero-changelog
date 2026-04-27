@@ -32,6 +32,14 @@ inputs:
   githubToken:
     description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
 
+outputs:
+  version:
+    description: The new version that was released.
+  tag:
+    description: The tag for the new version that was pushed.
+  releaseNotes:
+    description: The part of the changelog for this version.
+
 runs:
   using: node24
   main: ../dist/release.mjs
