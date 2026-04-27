@@ -39,7 +39,7 @@ async function createRelease(options: CreateGithubReleaseOptions): Promise<void>
       tag_name: options.tag,
       name: options.name,
       body: options.body,
-      make_latest: options.latest,
+      make_latest: String(options.latest),
       prerelease: options.prerelease,
     }),
   });
