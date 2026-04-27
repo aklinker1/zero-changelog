@@ -23,6 +23,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
+      - name: Update NPM for Provence
+        run: sudo npm i -g npm@latest
       - name: Bump and Release
         uses: ./actions/release
         with:
