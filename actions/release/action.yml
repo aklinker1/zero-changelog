@@ -31,10 +31,8 @@ inputs:
     description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
   latestRelease:
     description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
-    default: "true"
   throwOnNoChanges:
     description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
-    default: "false"
   githubToken:
     description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
 
