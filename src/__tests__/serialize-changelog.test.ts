@@ -19,8 +19,8 @@ describe("serializeChangelog", () => {
   describe("with sections", () => {
     it("should generate a full changelog", () => {
       const sections: ChangelogSection[] = [
-        { header: "v1.0.1", body: "one" },
         { header: "v1.0.0", body: "two" },
+        { header: "v1.0.1", body: "one" },
         { header: "v0.5.19-beta.2", body: "three" },
       ];
 
