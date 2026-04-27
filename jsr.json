@@ -30,5 +30,6 @@
   "publish": {
     "include": ["README.MD", "src/**/*.ts"],
     "exclude": ["**/__tests__/**"]
-  }
+  },
+  "license": "MIT"
 }
