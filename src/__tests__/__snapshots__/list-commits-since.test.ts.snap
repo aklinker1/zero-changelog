@@ -92,7 +92,7 @@ exports[`listCommitsSince wxt-wxt-v0.20.14..wxt-v0.20.15.log 1`] = `
       "email": "nickbar01234@gmail.com",
       "name": "Nick Doan",
     },
-    "body": 
+    "body":
 "Co-authored-by: nickbar01234 <nickbar01234gmail.com>
 Co-authored-by: Aaron <aaronklinker1@gmail.com>"
 ,
@@ -145,7 +145,7 @@ Co-authored-by: Aaron <aaronklinker1@gmail.com>"
       "email": "535248+namuorg@users.noreply.github.com",
       "name": "Namu",
     },
-    "body": 
+    "body":
 "Co-authored-by: Namu <535248+namukang@users.noreply.github.com>
 Co-authored-by: Aaron <aaronklinker1@gmail.com>"
 ,
@@ -166,7 +166,7 @@ Co-authored-by: Aaron <aaronklinker1@gmail.com>"
 ]
 `;
 
-exports[`listCommitsSince zero-ioc-5217867..e780928.log 1`] = `
+exports[`listCommitsSince zero-changelog-5217867..e780928.log 1`] = `
 [
   {
     "author": {

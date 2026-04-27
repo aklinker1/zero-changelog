@@ -8,4 +8,4 @@ exports[`findPreviousTag wxt-v.log 1`] = `"v0.18.4"`;
 
 exports[`findPreviousTag wxt-wxt-v.log 1`] = `"wxt-v0.20.18"`;
 
-exports[`findPreviousTag zero-ioc-v.log 1`] = `"v1.5.1"`;
+exports[`findPreviousTag zero-changelog-v.log 1`] = `"v1.5.1"`;

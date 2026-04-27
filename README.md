@@ -27,9 +27,9 @@ bun add @aklinker1/zero-changelog
 
 Refer to the API reference:
 
-- [Release](https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions)
-- [Sync Releases](https://jsr.io/@aklinker1/zero-ioc/doc/sync-releases/~/SyncReleasesOptions)
-- [Summarize Unreleased Commits](https://jsr.io/@aklinker1/zero-ioc/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions)
+- [Release](https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions)
+- [Sync Releases](https://jsr.io/@aklinker1/zero-changelog/doc/sync-releases/~/SyncReleasesOptions)
+- [Summarize Unreleased Commits](https://jsr.io/@aklinker1/zero-changelog/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions)
 
 ## Usage
 

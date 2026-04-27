@@ -4,37 +4,37 @@ author: Aaron Klinker
 
 inputs:
   additionalDirs:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   bump:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   commitTemplate:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   dryRun:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   since:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   dryRunPublishCommands:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   path:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   publishCommands:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   releaseArtifacts:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   releaseTitleTemplate:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   tagPrefix:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   versionFiles:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   githubRepo:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   latestRelease:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   throwOnNoChanges:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   githubToken:
-    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
 
 outputs:
   version:

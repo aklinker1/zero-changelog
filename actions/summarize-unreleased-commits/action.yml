@@ -6,11 +6,11 @@ inputs:
   paths:
     description: |-
       See
-      https://jsr.io/@aklinker1/zero-ioc/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions
+      https://jsr.io/@aklinker1/zero-changelog/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions
   tagPrefixTemplate:
     description: |-
       See
-      https://jsr.io/@aklinker1/zero-ioc/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions
+      https://jsr.io/@aklinker1/zero-changelog/doc/summarize-unreleased-commits/~/SummarizeUnreleasedCommitsOptions
 
 outputs:
   text:
