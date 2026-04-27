@@ -469,6 +469,10 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   // 4. Create release notes
 
   const releaseNotes = getReleaseNotes(conventionalCommits, since, tag, githubRepo);
+  console.log("Release notes:");
+  console.log("---");
+  console.log(releaseNotes);
+  console.log("---");
 
   // 5. Update changelog
 
@@ -483,6 +487,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     body: releaseNotes,
   });
   await writeFile("CHANGELOG.md", serializeChangelog(changelog), "utf8");
+  console.log("CHANGELOG.md updated");
 
   // 6. Run publish script
 
@@ -503,6 +508,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   await run({ dryRun, cwd: path, cmd: `git tag ${tag}` });
   await run({ dryRun, cwd: path, cmd: "git push" });
   await run({ dryRun, cwd: path, cmd: "git push --tags" });
+  console.log("Changes pushed");
 
   // 8. Create release
 
@@ -518,6 +524,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     latest: latestRelease,
     prerelease: isPrerelease(parseSemver(version)),
   });
+  console.log("Release created");
 
   return {
     version,
