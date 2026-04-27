@@ -25,8 +25,8 @@ jobs:
       - uses: ./.github/actions/setup
       - run: bun test
 
-  actions-build:
-    name: Actions Built
+  code-gen:
+    name: Ensure Code Gen is Up-To-Date
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -35,7 +35,7 @@ jobs:
       - name: Check for git changes
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo -e "Error: Detected changes in actions/dist. These files should be committed.\n\nRun \`bun run build\` to update the actions and commit the change."
+            echo -e "Error: Detected changes after running \`bun run build\`. These changes should be committed."
             git status
             git diff
             exit 1
