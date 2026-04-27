@@ -3,7 +3,8 @@ import { readdir } from "node:fs/promises";
 const allChildren = await readdir("src", { withFileTypes: true });
 const tsFilesNoExtension = allChildren
   .filter((file) => file.isFile() && file.name.endsWith(".ts"))
-  .map((file) => file.name.slice(0, -3));
+  .map((file) => file.name.slice(0, -3))
+  .toSorted();
 
 const pkgJsonFile = Bun.file("package.json");
 const jsrJsonFile = Bun.file("jsr.json");
