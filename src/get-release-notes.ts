@@ -1,4 +1,5 @@
 import type { ConventionalCommit } from "./conventional-commit";
+import { sentenceCase } from "./internal/utils";
 import DEFAULT_TYPES from "./semver-types/aklinker1";
 
 export function getReleaseNotes(
@@ -30,7 +31,7 @@ export function getReleaseNotes(
     for (const commit of commits) {
       const scope = commit.scope ? `**${commit.scope}**: ` : "";
       const breaking = commit.isBreaking ? "⚠️ " : "";
-      lines.push(`- ${breaking}${scope}${commit.description}`);
+      lines.push(`- ${breaking}${scope}${sentenceCase(commit.description)}`);
     }
     lines.push("");
   }
