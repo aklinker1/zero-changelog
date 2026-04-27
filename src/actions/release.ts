@@ -1,27 +1,28 @@
-import { getBooleanInput, getInput, getMultilineInput, setFailed, setOutput } from "@actions/core";
+import { getBooleanInput, getMultilineInput, setFailed, setOutput } from "@actions/core";
 
 import type { NullablyRequired } from "../internal/utils";
 import { release, type ReleaseOptions } from "../release";
 import { getFilesInput } from "./internal/get-files-input";
+import { getStringInput } from "./internal/get-string-input";
 
 try {
   const options: NullablyRequired<ReleaseOptions> = {
     additionalDirs: await getFilesInput("additionalDirs"),
-    bump: getInput("bump"),
-    commitTemplate: getInput("commitTemplate"),
+    bump: getStringInput("bump"),
+    commitTemplate: getStringInput("commitTemplate"),
     dryRun: getBooleanInput("dryRun"),
-    since: getInput("since"),
+    since: getStringInput("since"),
     dryRunPublishCommands: getMultilineInput("dryRunPublishCommands"),
-    path: getInput("path"),
+    path: getStringInput("path"),
     publishCommands: getMultilineInput("publishCommands"),
     releaseArtifacts: await getFilesInput("releaseArtifacts"),
-    releaseNameTemplate: getInput("releaseNameTemplate"),
+    releaseNameTemplate: getStringInput("releaseNameTemplate"),
     latestRelease: getBooleanInput("latestRelease"),
-    tagPrefix: getInput("tagPrefix"),
+    tagPrefix: getStringInput("tagPrefix"),
     versionFiles: await getFilesInput("versionFiles"),
     throwOnNoChanges: getBooleanInput("throwOnNoChanges"),
-    githubRepo: getInput("githubRepo") as `${string}/${string}` | undefined,
-    githubToken: getInput("githubToken", { required: true }),
+    githubRepo: getStringInput("githubRepo") as `${string}/${string}` | undefined,
+    githubToken: getStringInput("githubToken", { required: true }),
   };
   console.log("Options from GitHub:", options);
 
