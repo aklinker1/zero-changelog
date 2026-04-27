@@ -28,7 +28,7 @@
     "./sync-release": "./src/sync-release.ts"
   },
   "publish": {
-    "include": ["README.MD", "src/**/*.ts"],
+    "include": ["README.md", "src/**/*.ts"],
     "exclude": ["**/__tests__/**", "src/actions"]
   },
   "license": "MIT"
