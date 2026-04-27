@@ -1,4 +1,4 @@
-import { getInput, setFailed, setOutput } from "@actions/core";
+import { setFailed, setOutput } from "@actions/core";
 
 import type { NullablyRequired } from "../internal/utils";
 import {
