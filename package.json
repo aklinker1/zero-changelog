@@ -9,6 +9,9 @@
     "release notes"
   ],
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/aklinker1/zero-changelog"
+  },
   "files": [
     "dist/"
   ],
