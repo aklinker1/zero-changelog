@@ -505,6 +505,4 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     latest: latestRelease,
     prerelease: isPrerelease(parseSemver(version)),
   });
-
-  throw Error("Not implemented");
 }
