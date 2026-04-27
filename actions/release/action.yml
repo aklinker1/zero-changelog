@@ -27,6 +27,10 @@ inputs:
     description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
   versionFiles:
     description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  githubRepo:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
+  githubToken:
+    description: See https://jsr.io/@aklinker1/zero-ioc/doc/release/~/ReleaseOptions
 
 runs:
   using: node24
