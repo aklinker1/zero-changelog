@@ -1,1 +1,1 @@
-import{o as e}from"./core-DIZSI-vB.mjs";try{console.log(`TODO`),e(`TODO`)}catch(t){e(t instanceof Error?t.message:String(t))}export{};
+import{a as e}from"./core-Ddxm7txv.mjs";try{console.log(`TODO`),e(`TODO`)}catch(t){e(t instanceof Error?t.message:String(t))}export{};
