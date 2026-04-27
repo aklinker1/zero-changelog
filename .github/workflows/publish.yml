@@ -1,0 +1,35 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      dryRun:
+        description: Dry Run?
+        type: boolean
+        default: true
+
+jobs:
+  validate:
+    uses: ./.github/workflows/validate.yml
+
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump and Release
+        uses: ./actions/release
+        with:
+          publishCommands: |-
+            npm publish
+            bunx jsr publish
+          versionFiles: |-
+            package.json
+            jsr.json
+          dryRun: ${{ inputs.dryRun }}
+          dryRunPublishCommands: |-
+            npm publish --dry-run
+            bunx jsr publish --dry-run --allow-dirty
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
