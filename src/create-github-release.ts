@@ -1,5 +1,4 @@
 import { createReadStream, ReadStream } from "node:fs";
-import { styleText } from "node:util";
 
 type CreateGithubReleaseOptions = {
   repo: `${string}/${string}`;
@@ -15,23 +14,13 @@ type CreateGithubReleaseOptions = {
 
 export async function createGithubRelease(options: CreateGithubReleaseOptions): Promise<void> {
   console.log("Creating GitHub release...");
+  const artifactStreams = await getArtifactStreams(options.artifacts ?? []);
+
   if (options.dryRun) {
     console.log("  -> Skipping, dry run");
   } else {
-    throw Error("TODO");
-  }
-
-  for (const artifact of options.artifacts ?? []) {
-    console.log(`Uploading ${styleText("cyan", artifact)}...`);
-    if (options.dryRun) {
-      console.log("  -> Skipping, dry run");
-    } else {
-      const artifactStreams = options.artifacts?.length
-        ? await getArtifactStreams(options.artifacts)
-        : undefined;
-      await createRelease(options);
-      if (artifactStreams) await uploadArtifacts(options, artifactStreams);
-    }
+    await createRelease(options);
+    if (artifactStreams) await uploadArtifacts(options, artifactStreams);
   }
 }
 
