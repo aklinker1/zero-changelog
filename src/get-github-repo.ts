@@ -5,6 +5,7 @@ import { waitForChildProcess } from "./internal/wait-for-child-process";
 const REMOTE_REGEX = [
   /^git@github\.com:(?<owner>\S+)\/(?<repo>\S+)\.git$/,
   /^https:\/\/github\.com\/(?<owner>\S+)\/(?<repo>\S+)\.git$/,
+  /^https:\/\/github\.com\/(?<owner>\S+)\/(?<repo>\S+)$/,
 ];
 
 export async function getGithubRepo(): Promise<`${string}/${string}`> {
