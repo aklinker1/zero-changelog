@@ -446,25 +446,38 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   // 2. Collect relevant commits
 
   const since = options.since ?? (await findPreviousTag(tagPrefix));
+  console.log("Since:", since);
   const commits = await listCommitsSince({ since, dirs: [path, ...additionalDirs] });
-  const changes = parseCommits(commits);
+  console.log("Commits:", commits.length);
+  const conventionalCommits = parseCommits(commits);
+  console.log("Conventional commits:", conventionalCommits.length);
 
   // 3. Bump version
 
-  const bump = (options.bump?.trim() || undefined) ?? detectVersionBump(changes, throwOnNoChanges);
+  const bump =
+    (options.bump?.trim() || undefined) ?? detectVersionBump(conventionalCommits, throwOnNoChanges);
+  console.log("Bump:", bump);
+
   const version = currentVersion.bump(bump);
+  console.log("Version:", version);
+
   const tag = tagPrefix + version;
-  console.log("Bumping version to:", version);
   console.log("Tag:", tag);
+
   await updateVersionFiles(path, versionFiles, version);
 
   // 4. Create release notes
 
-  const releaseNotes = getReleaseNotes(changes, since, tag, githubRepo);
+  const releaseNotes = getReleaseNotes(conventionalCommits, since, tag, githubRepo);
 
   // 5. Update changelog
 
-  const changelog = parseChangelog(await readFile("CHANGELOG.md", "utf8"));
+  const changelog = parseChangelog(
+    await readFile("CHANGELOG.md", "utf8").catch((err) => {
+      if (err.code === "ENOENT") return "";
+      throw err;
+    }),
+  );
   changelog.unshift({
     header: `v${version}`,
     body: releaseNotes,
