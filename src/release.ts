@@ -128,6 +128,7 @@ export type ReleaseOptions = {
    * Template vars:
    *
    * - `{{version}}`: The version after being bumped.
+   * - `{{tag}}`: The tag that will be used for the release.
    * - `{{path}}`: The {@link ReleaseOptions#path} relative to the current working directory.
    * - `{{dirname}}`: The path's base name.
    *
@@ -149,7 +150,7 @@ export type ReleaseOptions = {
    *     commitTemplate: "chore(release): My Package v{{version}}"
    * ```
    *
-   * @default "chore(release): v{{version}}"
+   * @default "chore(release): {{tag}}"
    */
   commitTemplate?: string;
 
@@ -418,7 +419,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   const {
     additionalDirs = [],
-    commitTemplate = "chore(release): v{{version}}",
+    commitTemplate = "chore(release): {{tag}}",
     dryRun = false,
     dryRunPublishCommands,
     publishCommands,
@@ -492,7 +493,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   // 6. Commit changes
 
-  const commit = template(commitTemplate, { version, path, dirname });
+  const commit = template(commitTemplate, { version, path, dirname, tag });
   await run({ dryRun, cwd: path, cmd: `git add CHANGELOG.md` });
   await run({ dryRun, cwd: path, cmd: `git commit -am "${commit}"` });
   await run({ dryRun, cwd: path, cmd: `git tag ${tag}` });
