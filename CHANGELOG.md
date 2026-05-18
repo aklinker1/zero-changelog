@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.8
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.7...v0.1.8)
+
+### 🩹 Fixes
+
+- Write changelog to specified `path`, not current directory
+
+### ❤️ Contributors
+
+- Aaron <aaronklinker1@gmail.com>
+
+
 ## v0.1.7
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.6...v0.1.7)
@@ -11,7 +24,6 @@
 ### ❤️ Contributors
 
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.6
 
