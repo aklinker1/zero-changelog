@@ -489,7 +489,15 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   await writeFile("CHANGELOG.md", serializeChangelog(changelog), "utf8");
   console.log("CHANGELOG.md updated");
 
-  // 6. Run publish script
+  // 6. Commit changes
+
+  const commit = template(commitTemplate, { version, path, dirname });
+  await run({ dryRun, cwd: path, cmd: `git add CHANGELOG.md` });
+  await run({ dryRun, cwd: path, cmd: `git commit -am "${commit}"` });
+  await run({ dryRun, cwd: path, cmd: `git tag ${tag}` });
+  console.log("Changes committed");
+
+  // 7. Run publish script
 
   if (dryRun && dryRunPublishCommands?.length) {
     for (const cmd of dryRunPublishCommands) {
@@ -501,17 +509,13 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     }
   }
 
-  // 7. Commit changes
+  // 8. Push changes
 
-  const commit = template(commitTemplate, { version, path, dirname });
-  await run({ dryRun, cwd: path, cmd: `git add CHANGELOG.md` });
-  await run({ dryRun, cwd: path, cmd: `git commit -am "${commit}"` });
-  await run({ dryRun, cwd: path, cmd: `git tag ${tag}` });
   await run({ dryRun, cwd: path, cmd: "git push" });
   await run({ dryRun, cwd: path, cmd: "git push --tags" });
   console.log("Changes pushed");
 
-  // 8. Create release
+  // 9. Create release
 
   const releaseName = template(releaseNameTemplate, { version, tag, path, dirname });
   await createGithubRelease({
