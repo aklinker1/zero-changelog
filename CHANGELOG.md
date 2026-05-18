@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.9
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.8...v0.1.9)
+
+### 🩹 Fixes
+
+- **github-actions**: Fix typo in `releaseNameTemplate` input definition
+
+### ❤️ Contributors
+
+- Aaron <aaronklinker1@gmail.com>
+
+
 ## v0.1.8
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.7...v0.1.8)
@@ -11,7 +24,6 @@
 ### ❤️ Contributors
 
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.7
 
