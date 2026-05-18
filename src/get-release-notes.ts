@@ -20,6 +20,7 @@ export function getReleaseNotes(
   );
 
   const lines: string[] = [];
+  const breakingChanges: string[] = [];
 
   if (since) {
     lines.push(`[compare changes](https://github.com/${repo}/compare/${since}...${tag})`, "");
@@ -33,10 +34,23 @@ export function getReleaseNotes(
     for (const commit of commits) {
       const scope = commit.scope ? `**${commit.scope}**: ` : "";
       const breaking = commit.isBreaking ? "⚠️ " : "";
+      const hash = commit.hash.slice(0, 7);
+      const hashLink = `[\`${hash}\`](https://github.com/${repo}/commit/${commit.hash})`;
       lines.push(
-        `- ${breaking}${scope}${sentenceCase(commit.description)}${REF_SUFFIX_REGEX.test(commit.description) ? "" : ` (${commit.hash.slice(0, 7)})`}`,
+        `- ${breaking}${scope}${sentenceCase(commit.description)}${REF_SUFFIX_REGEX.test(commit.description) ? "" : ` (${hashLink})`}`,
       );
+
+      if (commit.isBreaking) {
+        const footer = commit.footers.find((footer) => footer.key === "breaking change");
+        if (footer) breakingChanges.push(`- ${hashLink}: ${footer.value} `);
+      }
     }
+    lines.push("");
+  }
+
+  if (breakingChanges.length > 0) {
+    lines.push("### ⚠️ Breaking Changes", "");
+    lines.push(...breakingChanges);
     lines.push("");
   }
 
