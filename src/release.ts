@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { basename, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 
 import { createGithubRelease } from "./create-github-release";
 import { detectVersionBump } from "./detect-version-bump";
@@ -476,8 +476,9 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   // 5. Update changelog
 
+  const changelogPath = join(path, "CHANGELOG.md");
   const changelog = parseChangelog(
-    await readFile("CHANGELOG.md", "utf8").catch((err) => {
+    await readFile(changelogPath, "utf8").catch((err) => {
       if (err.code === "ENOENT") return "";
       throw err;
     }),
@@ -486,7 +487,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     header: `v${version}`,
     body: releaseNotes,
   });
-  await writeFile("CHANGELOG.md", serializeChangelog(changelog), "utf8");
+  await writeFile(changelogPath, serializeChangelog(changelog), "utf8");
   console.log("CHANGELOG.md updated");
 
   // 6. Commit changes
