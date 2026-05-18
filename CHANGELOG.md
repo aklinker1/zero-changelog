@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.7
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.6...v0.1.7)
+
+### 🩹 Fixes
+
+- Commit changes before publishing, push after
+
+### ❤️ Contributors
+
+- Aaron <aaronklinker1@gmail.com>
+
+
 ## v0.1.6
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.5...v0.1.6)
@@ -20,7 +33,6 @@
 ### ❤️ Contributors
 
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.5
 
