@@ -21,7 +21,7 @@ inputs:
     description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   releaseArtifacts:
     description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
-  releaseTitleTemplate:
+  releaseNameTemplate:
     description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   tagPrefix:
     description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
