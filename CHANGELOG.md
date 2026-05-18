@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.1.10
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.9...v0.1.10)
+
+### 🚀 Features
+
+- Include breaking change footer in release notes ([`d58bae2`](https://github.com/aklinker1/zero-changelog/commit/d58bae2fbf85f1ab70cb0156cbfe3ee14b6e04a9))
+
+### 🩹 Fixes
+
+- Add commit hash to changelog lines without PR number ([`61c44a2`](https://github.com/aklinker1/zero-changelog/commit/61c44a2dab41993e6b85d1dd9cee6158c57ab0c5))
+- Update default `commitTemplate` to use `{{tag}}` instead of `v{{version}}` ([`b1edf22`](https://github.com/aklinker1/zero-changelog/commit/b1edf22fc51cbed70d9223d7dd7d910f1ae3703f))
+
+### ❤️ Contributors
+
+- Aaron <aaronklinker1@gmail.com>
+
+
 ## v0.1.9
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.8...v0.1.9)
@@ -11,7 +29,6 @@
 ### ❤️ Contributors
 
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.8
 
