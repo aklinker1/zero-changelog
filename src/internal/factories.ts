@@ -15,6 +15,7 @@ export const gitCommitFactory = createFactory<GitCommit>({
 });
 
 export const conventionalCommitFactory = createFactory<ConventionalCommit>({
+  hash: "1234567",
   description: "This is a test message",
   footers: [],
   isBreaking: false,

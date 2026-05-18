@@ -1,4 +1,5 @@
 export type ConventionalCommit = {
+  hash: string;
   type: string;
   scope?: string;
   description: string;

@@ -29,6 +29,7 @@ export function parseCommit(commit: GitCommit): ConventionalCommit | undefined {
   }
 
   return {
+    hash: commit.hash,
     type,
     scope,
     description,

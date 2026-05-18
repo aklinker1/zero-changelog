@@ -2,6 +2,8 @@ import type { ConventionalCommit } from "./conventional-commit";
 import { sentenceCase } from "./internal/utils";
 import DEFAULT_TYPES from "./semver-types/aklinker1";
 
+const REF_SUFFIX_REGEX = /\(#[0-9]+\)$/;
+
 export function getReleaseNotes(
   conventionalCommits: ConventionalCommit[],
   since: string | undefined,
@@ -31,7 +33,9 @@ export function getReleaseNotes(
     for (const commit of commits) {
       const scope = commit.scope ? `**${commit.scope}**: ` : "";
       const breaking = commit.isBreaking ? "⚠️ " : "";
-      lines.push(`- ${breaking}${scope}${sentenceCase(commit.description)}`);
+      lines.push(
+        `- ${breaking}${scope}${sentenceCase(commit.description)}${REF_SUFFIX_REGEX.test(commit.description) ? "" : ` (${commit.hash.slice(0, 7)})`}`,
+      );
     }
     lines.push("");
   }

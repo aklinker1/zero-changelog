@@ -11,6 +11,7 @@ describe("parseCommit", () => {
 
     it("should be parsed", () => {
       expect(parseCommit(commit)).toEqual({
+        hash: commit.hash,
         type: "chore",
         scope: undefined,
         description: "Update nano-staged precommit command",
@@ -29,6 +30,7 @@ describe("parseCommit", () => {
 
     it("should be parsed", () => {
       expect(parseCommit(commit)).toEqual({
+        hash: commit.hash,
         type: "fix",
         scope: undefined,
         description: "Make web-ext a peer dependency (#2079)",
@@ -47,6 +49,7 @@ describe("parseCommit", () => {
 
     it("should be parsed", () => {
       expect(parseCommit(commit)).toEqual({
+        hash: commit.hash,
         type: "feat",
         scope: "modules",
         description: "Add support for augmenting entrypoint options (#2149)",
@@ -65,6 +68,7 @@ describe("parseCommit", () => {
 
     it("should be parsed", () => {
       expect(parseCommit(commit)).toEqual({
+        hash: commit.hash,
         type: "feat",
         scope: "unimport",
         description: "Auto-import types",
@@ -84,6 +88,7 @@ describe("parseCommit", () => {
 
     it("should be parsed", () => {
       expect(parseCommit(commit)).toEqual({
+        hash: commit.hash,
         type: "perf",
         scope: undefined,
         description: "Use filter to improve plugin performance with rolldown (#1787)",
@@ -109,6 +114,7 @@ describe("parseCommit", () => {
 
     it("should be parsed", () => {
       expect(parseCommit(commit)).toEqual({
+        hash: commit.hash,
         type: "docs",
         scope: undefined,
         description: "Update README",
@@ -128,6 +134,7 @@ describe("parseCommit", () => {
 
     it("should be parsed", () => {
       expect(parseCommit(commit)).toEqual({
+        hash: commit.hash,
         type: "feat",
         scope: undefined,
         description: "Add support for breaking change footer",
