@@ -625,9 +625,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   const end = performance.now();
   logger?.info("");
-  logger?.info(
-    `${styleText(GREEN, "✓")} Release completed in ${((end - start) / 1000).toFixed(3)}s`,
-  );
+  logger?.info(`${styleText(GREEN, "✓")} Completed in ${((end - start) / 1000).toFixed(3)}s`);
 
   return {
     version,
