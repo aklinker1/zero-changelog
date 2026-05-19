@@ -36,7 +36,7 @@ Refer to the API reference:
 ### GitHub Action
 
 ```yml
-- uses: aklinker1/zero-changelog/actions/release@1.0.0
+- uses: aklinker1/zero-changelog/actions/release@v1.0.0
   with:
     # options...
 ```
@@ -123,36 +123,13 @@ await release({
 Otherwise stable versions will remain stable, unstable will remain unstable, and prereleases will
 remain prereleases.
 
-## Plan
-
-Release:
-
-1. List git commits
-2. Detect type of version bump
-3. Generate changelog
-4. Bump version in version files
-5. Update changelog
-6. Git commit & tag
-7. Git push
-8. Create release
-
-Sync Releases:
-
-1. Parse changelog
-2. Update each release to match changelog
-
-Summarize Unreleased Changes:
-
-1. List commits in each directory since the last commit
-2. Print and return the summary
-
 ## TODO
 
 - [x] Structure for package + action
 - [x] Implement tests
 - [x] Implement git logic
 - [ ] Implement sync releases
+- [ ] Implement unreleased commit summary
 - [x] Glob patterns for github action
-- [x] Implement unreleased commit summary
 - [ ] CLI?
 - [x] Implement alpha/beta version bumping
