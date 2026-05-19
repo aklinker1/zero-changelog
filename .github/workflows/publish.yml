@@ -39,6 +39,9 @@ jobs:
         uses: ./actions/release
         with:
           bump: ${{ inputs.bump }}
+          preCommitCommands: |-
+            bun run build
+            git add actions/dist
           publishCommands: |-
             npm publish
             bunx jsr publish --allow-dirty

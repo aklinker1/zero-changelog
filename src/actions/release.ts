@@ -17,6 +17,7 @@ try {
     dryRunPublishCommands: getStringArrayInput("dryRunPublishCommands"),
     path: getStringInput("path"),
     publishCommands: getStringArrayInput("publishCommands"),
+    preCommitCommands: getStringArrayInput("preCommitCommands"),
     releaseArtifacts: await getFilesInput("releaseArtifacts"),
     releaseNameTemplate: getStringInput("releaseNameTemplate"),
     latestRelease: getBoolInput("latestRelease"),

@@ -237,6 +237,37 @@ export type ReleaseOptions = {
   releaseNameTemplate?: string;
 
   /**
+   * Custom commands to run after the version bump, but before committing.
+   *
+   * If not provided, nothing is ran.
+   *
+   * Template vars:
+   *
+   * - `{{version}}`: The version after being bumped.
+   * - `{{tag}}`: The tag that will be used for the release.
+   * - `{{path}}`: The {@link ReleaseOptions#path} relative to the current working directory.
+   * - `{{dirname}}`: The path's base name.
+   *
+   * JS Usage:
+   *
+   * ```ts
+   * await release({
+   *   preCommitCommands: ["bun run build"],
+   * });
+   * ```
+   *
+   * GitHub Actions:
+   *
+   * ```yml
+   * - uses: aklinker1/zero-changelog/actions/release
+   *   with:
+   *     preCommitCommands: |-
+   *       bun run build
+   * ```
+   */
+  preCommitCommands?: string[];
+
+  /**
    * A custom publish command to run before committing and creating the release.
    *
    * If not provided, nothing is ran.
@@ -532,6 +563,15 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   logger?.section("Commit changes");
 
+  const preCommitCommands = options.preCommitCommands?.map((command) =>
+    template(command, templateVars),
+  );
+  if (preCommitCommands) {
+    for (const cmd of preCommitCommands) {
+      await run({ cwd: resolved.path, cmd });
+    }
+  }
+
   const commit = template(resolved.commitTemplate, templateVars);
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git add CHANGELOG.md` });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git commit -am "${commit}"` });
@@ -609,6 +649,7 @@ type ResolvedReleaseOptions = {
   githubToken: string;
   latestRelease: boolean;
   path: string;
+  preCommitCommands: string[];
   publishCommands: string[];
   relativePath: string;
   releaseArtifacts: string[];
@@ -641,6 +682,7 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
   const githubRepo = input.githubRepo ?? (await getGithubRepo());
   const publishCommands = input.publishCommands ?? [];
   const dryRunPublishCommands = input.dryRunPublishCommands ?? [];
+  const preCommitCommands = input.preCommitCommands ?? [];
   const tagPrefix = path === cwd ? "v" : `${dirname}-v`;
   const since = input.since ?? (await findPreviousTag(tagPrefix));
 
@@ -667,6 +709,7 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
     githubToken: githubToken!,
     latestRelease,
     path,
+    preCommitCommands,
     publishCommands,
     relativePath,
     releaseArtifacts,

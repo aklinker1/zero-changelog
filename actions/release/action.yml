@@ -17,6 +17,8 @@ inputs:
     description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   path:
     description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
+  preCommitCommands:
+    description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   publishCommands:
     description: See https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions
   releaseArtifacts:
