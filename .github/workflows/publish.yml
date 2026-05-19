@@ -39,11 +39,7 @@ jobs:
         uses: ./actions/release
         with:
           bump: ${{ inputs.bump }}
-          # Build and commit github action changes as well
           publishCommands: |-
-            bun run build
-            git add -A
-            git commit --amend --no-edit
             npm publish
             bunx jsr publish --allow-dirty
           dryRun: ${{ inputs.dryRun }}

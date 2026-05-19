@@ -2,7 +2,7 @@ import type { GitCommit } from "./git-commit";
 import { logger } from "./internal/logger";
 import { runGitLog } from "./internal/run-git-log";
 
-/** List the commits since a ref in specific dirs. */
+/** List the commits since a ref in specific dirs. Oldest commits first. */
 export async function listCommitsSince(options: {
   dirs: string[];
   since: string | undefined;
@@ -13,7 +13,7 @@ export async function listCommitsSince(options: {
   );
 
   const log = await runGitLog(options.dirs, options.since);
-  return parseGitLog(log);
+  return parseGitLog(log).reverse();
 }
 
 export function parseGitLog(log: string): GitCommit[] {
