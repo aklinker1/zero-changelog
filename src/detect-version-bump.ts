@@ -1,4 +1,5 @@
 import type { ConventionalCommit } from "./conventional-commit";
+import { logger } from "./internal/logger";
 import type { RelativeBump } from "./semver";
 import DEFAULT_TYPES from "./semver-types/aklinker1";
 
@@ -23,13 +24,12 @@ export function detectVersionBump(
   conventionalCommits: ConventionalCommit[],
   throwOnNoChanges: boolean,
 ): RelativeBump {
-  console.log("Detecting version bump based on changes...");
+  logger?.info("Detecting version bump based on conventional commits...");
 
   let priority: Priority = NONE;
 
   for (const commit of conventionalCommits) {
     if (commit.isBreaking) {
-      console.log("  -> major");
       return "major";
     }
 
@@ -39,17 +39,14 @@ export function detectVersionBump(
 
   switch (priority) {
     case MINOR:
-      console.log("  -> minor");
       return "minor";
 
     case PATCH:
-      console.log("  -> patch");
       return "patch";
 
     case NONE:
       if (throwOnNoChanges) throw Error("No semver changes detected");
 
-      console.log("  -> patch");
       return "patch";
 
     default:

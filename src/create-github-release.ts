@@ -1,5 +1,7 @@
 import { createReadStream, ReadStream } from "node:fs";
 
+import { logger } from "./internal/logger";
+
 type CreateGithubReleaseOptions = {
   repo: `${string}/${string}`;
   token: string;
@@ -13,11 +15,11 @@ type CreateGithubReleaseOptions = {
 };
 
 export async function createGithubRelease(options: CreateGithubReleaseOptions): Promise<void> {
-  console.log("Creating GitHub release...");
+  logger?.info("Creating GitHub release...");
   const artifactStreams = await getArtifactStreams(options.artifacts ?? []);
 
   if (options.dryRun) {
-    console.log("  -> Skipping, dry run");
+    logger?.detail("Skipping");
   } else {
     await createRelease(options);
     if (artifactStreams) await uploadArtifacts(options, artifactStreams);
@@ -56,7 +58,7 @@ async function uploadArtifacts(
 ): Promise<void> {
   for (const [i, stream] of artifactStreams.entries()) {
     const artifact = options.artifacts![i];
-    console.log("  -> Uploading ", artifact);
+    logger?.detail("Uploading " + artifact);
     const res = await fetch(
       `https://uploads.github.com/repos/${options.repo}/releases/tags/${options.tag}/assets`,
       {

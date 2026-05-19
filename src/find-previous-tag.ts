@@ -1,3 +1,4 @@
+import { logger } from "./internal/logger";
 import { runGitTag } from "./internal/run-git-tag";
 
 /**
@@ -7,7 +8,7 @@ import { runGitTag } from "./internal/run-git-tag";
  * @param tagPrefix The prefix to look for.
  */
 export async function findPreviousTag(tagPrefix: string): Promise<string | undefined> {
-  console.log(`Finding previous tag matching: "${tagPrefix}*"`);
+  logger?.info(`Finding previous tag matching: "${tagPrefix}*"`);
   const log = await runGitTag(tagPrefix);
   return log.trim().split("\n")[0] || undefined;
 }

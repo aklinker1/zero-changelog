@@ -1,6 +1,5 @@
-import { spawn } from "node:child_process";
-
-import { waitForChildProcess } from "./internal/wait-for-child-process";
+import { logger } from "./internal/logger";
+import { run } from "./internal/run";
 
 const REMOTE_REGEX = [
   /^git@github\.com:(?<owner>\S+)\/(?<repo>\S+)\.git$/,
@@ -8,10 +7,9 @@ const REMOTE_REGEX = [
   /^https:\/\/github\.com\/(?<owner>\S+)\/(?<repo>\S+)$/,
 ];
 
-export async function getGithubRepo(): Promise<`${string}/${string}`> {
-  console.log("Getting current github repo...");
-  const child = spawn("git", ["config", "--get", "remote.origin.url"]);
-  const { stdout } = await waitForChildProcess(child);
+export async function getGithubRepo(): Promise<`${string}/${string}` | undefined> {
+  logger?.info("Detecting github repo based on git origin URL...");
+  const stdout = await run({ cwd: process.cwd(), cmd: "git config --get remote.origin.url" });
   const url = stdout.trim();
 
   for (const regex of REMOTE_REGEX) {
@@ -21,5 +19,5 @@ export async function getGithubRepo(): Promise<`${string}/${string}`> {
     }
   }
 
-  throw Error(`Could not find github repo from the origin remote's URL: ${url}`);
+  logger?.detail("Failed to parse remote URL");
 }

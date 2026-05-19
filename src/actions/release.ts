@@ -26,8 +26,6 @@ try {
     githubRepo: getStringInput("githubRepo") as `${string}/${string}` | undefined,
     githubToken: getStringInput("githubToken", { required: true }),
   };
-  console.log("Options from GitHub:", options);
-
   const res = await release(options);
 
   setOutput("version", res.version);

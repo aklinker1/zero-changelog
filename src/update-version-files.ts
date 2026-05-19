@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { join, relative } from "node:path";
-import { styleText } from "node:util";
 
+import { logger, styleText, CYAN } from "./internal/logger";
 import { replaceRegexGroup } from "./internal/utils";
 import { getVersionRegexFor } from "./internal/version-regex";
 
@@ -10,7 +10,7 @@ export async function updateVersionFiles(
   versionFiles: string[],
   newVersion: string,
 ): Promise<void> {
-  console.log("Updating version...");
+  logger?.info("Updating version...");
   for (const versionFile of versionFiles) {
     await updateVersionFile(path, versionFile, newVersion);
   }
@@ -32,11 +32,11 @@ async function updateVersionFile(
 
     await writeFile(file, newText, "utf8");
 
-    console.log(`  -> ${styleText("cyan", relativePath)} updated`);
+    logger?.detail(`${styleText(CYAN, relativePath)} updated`);
   } catch (err: any) {
     // Ignore missing files
     if (err.code === "ENOENT") {
-      console.log(`  -> ${styleText("cyan", relativePath)} does not exist, skipping`);
+      logger?.detail(`${styleText(CYAN, relativePath)} does not exist, skipping`);
       return;
     }
 

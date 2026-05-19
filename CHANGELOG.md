@@ -1,5 +1,9 @@
 # Changelog
 
+### ❤️ Contributors
+
+- Aaron <aaronklinker1@gmail.com>
+
 ## v0.1.10
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.9...v0.1.10)
@@ -16,7 +20,6 @@
 ### ❤️ Contributors
 
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.9
 
