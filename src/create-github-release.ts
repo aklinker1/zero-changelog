@@ -19,7 +19,7 @@ export async function createGithubRelease(options: CreateGithubReleaseOptions): 
   const artifactStreams = await getArtifactStreams(options.artifacts ?? []);
 
   if (options.dryRun) {
-    logger?.detail("  -> Skipping, dry run");
+    logger?.detail("Skipping");
   } else {
     await createRelease(options);
     if (artifactStreams) await uploadArtifacts(options, artifactStreams);

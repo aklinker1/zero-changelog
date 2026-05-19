@@ -535,10 +535,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   const commit = template(resolved.commitTemplate, templateVars);
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git add CHANGELOG.md` });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git commit -am "${commit}"` });
-  logger?.info("Changes committed");
-
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git tag ${tag}` });
-  logger?.info("Tag added");
 
   // 7. Run publish scripts
 
@@ -566,9 +563,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   logger?.section("Push changes");
 
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push" });
-  logger?.info("Commits pushed");
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push --tags" });
-  logger?.info("Tag pushed");
 
   // 9. Create release
 

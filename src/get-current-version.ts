@@ -6,8 +6,6 @@ import { logger } from "./internal/logger";
 import { getVersionRegexFor } from "./internal/version-regex";
 
 export async function getCurrentVersion(path: string, versionFiles: string[]): Promise<string> {
-  logger?.info("Getting current version...");
-
   for (const versionFile of versionFiles) {
     try {
       const file = join(path, versionFile);

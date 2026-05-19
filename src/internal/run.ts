@@ -13,6 +13,7 @@ export async function run(options: {
     const done = logger?.command(options.cmd, options.cwd);
     logger?.info(`│ ${styleText(ITALIC, "Skipped")}`);
     done?.();
+    return "";
   }
 
   return new Promise((resolve, reject) => {
