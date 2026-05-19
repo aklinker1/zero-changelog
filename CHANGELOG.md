@@ -1,8 +1,28 @@
 # Changelog
 
+## v0.1.11
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.10...v0.1.11)
+
+### 🚀 Features
+
+- Add PR links to release notes MD ([`009d279`](https://github.com/aklinker1/zero-changelog/commit/009d279db0ba39958618fa4573ae88d41974c307))
+- Format the logs to look good ([#10](https://github.com/aklinker1/zero-changelog/pull/10))
+- Add pre-commit commands option ([`7778218`](https://github.com/aklinker1/zero-changelog/commit/777821811961132e4334bb122a22a79a809c806b))
+
+### 🩹 Fixes
+
+- Don't print "Release created" log during dry runs ([`8bd43e5`](https://github.com/aklinker1/zero-changelog/commit/8bd43e5e70032bfc28b7b23a72e0548fcca0725a))
+
+### 🤖 CI
+
+- Only run pkg.pr.new on pushes to `main` and PRs ([`dff7510`](https://github.com/aklinker1/zero-changelog/commit/dff7510856eab3f5b1cd68f4bafb032c618cafea))
+
 ### ❤️ Contributors
 
+- github-actions[bot] <github-actions[bot]@users.noreply.github.com>
 - Aaron <aaronklinker1@gmail.com>
+
 
 ## v0.1.10
 

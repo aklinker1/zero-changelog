@@ -1,6 +1,6 @@
 {
   "name": "@aklinker1/zero-changelog",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Zero-dependency, conventional commit release and changelog generator with monorepo support",
   "keywords": [
     "changelog",
