@@ -9,7 +9,6 @@ export interface Logger {
   info(message: string, ...args: any[]): void;
   detail(message: string, ...args: any[]): void;
   command(command: string, wd: string, child?: ChildProcess): () => void;
-  dryRunPrefix: string;
 }
 
 export function initLogger(dryRun?: boolean): void {
@@ -66,7 +65,6 @@ export function initLogger(dryRun?: boolean): void {
     info,
     detail,
     command,
-    dryRunPrefix,
   };
 }
 
