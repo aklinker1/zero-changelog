@@ -1,6 +1,6 @@
 import { exec } from "node:child_process";
-import { styleText } from "node:util";
 
+import { ITALIC, styleText } from "./logger";
 import { logger } from "./logger";
 
 /** Run a command, inheriting stdio. Also returns `stdout` */
@@ -11,7 +11,7 @@ export async function run(options: {
 }): Promise<string> {
   if (options.skipped) {
     const done = logger?.command(options.cmd, options.cwd);
-    logger?.info(`${logger?.dryRunPrefix}│ ${styleText("italic", "Skipped")}`);
+    logger?.info(`${logger?.dryRunPrefix}│ ${styleText(ITALIC, "Skipped")}`);
     done?.();
   }
 

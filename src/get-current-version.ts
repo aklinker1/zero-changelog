@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
-import { styleText } from "node:util";
 
+import { CYAN, styleText } from "./internal/logger";
 import { logger } from "./internal/logger";
 import { getVersionRegexFor } from "./internal/version-regex";
 
@@ -17,12 +17,12 @@ export async function getCurrentVersion(path: string, versionFiles: string[]): P
 
       if (version) {
         logger?.info(
-          `Found current version (${version}) in ${styleText("cyan", relative(process.cwd(), file))}`,
+          `Found current version (${version}) in ${styleText(CYAN, relative(process.cwd(), file))}`,
         );
         return version;
       }
 
-      logger?.detail(`Not found in ${styleText("cyan", relative(process.cwd(), file))}`);
+      logger?.detail(`Not found in ${styleText(CYAN, relative(process.cwd(), file))}`);
     } catch (err: any) {
       if (err.code !== "ENOENT") throw err;
     }

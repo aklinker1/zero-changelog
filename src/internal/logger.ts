@@ -1,6 +1,5 @@
 import type { ChildProcess } from "node:child_process";
 import { relative, resolve } from "node:path";
-import { styleText } from "node:util";
 
 import { version } from "../../jsr.json" with { type: "json" };
 
@@ -16,15 +15,15 @@ export interface Logger {
 export function initLogger(dryRun?: boolean): void {
   const cwd = process.cwd();
 
-  const dryRunPrefix = dryRun ? styleText("yellow", "[dry-run] ") : "";
+  const dryRunPrefix = dryRun ? styleText(YELLOW, "[dry-run] ") : "";
 
   const title: Logger["title"] = (text) => {
-    console.log(`${dryRunPrefix}${styleText("bold", text)}`);
-    console.log(`${dryRunPrefix}${styleText("dim", "zero-changelog v" + version)}`);
+    console.log(`${dryRunPrefix}${styleText(BOLD, text)}`);
+    console.log(`${dryRunPrefix}${styleText(DIM, "zero-changelog v" + version)}`);
   };
 
   const section: Logger["section"] = (text) => {
-    console.log(`${dryRunPrefix}\n${dryRunPrefix}${styleText("cyan", text)}`);
+    console.log(`${dryRunPrefix}\n${dryRunPrefix}${styleText(CYAN, text)}`);
   };
 
   const info: Logger["info"] = (message, ...args) => {
@@ -32,26 +31,26 @@ export function initLogger(dryRun?: boolean): void {
   };
 
   const detail: Logger["detail"] = (message, ...args) => {
-    console.log(dryRunPrefix + styleText("dim", `  → ${message}`), ...args);
+    console.log(dryRunPrefix + styleText(DIM, `  → ${message}`), ...args);
   };
 
   const command: Logger["command"] = (command, wd, child) => {
     const start = performance.now();
     const absWd = resolve(wd);
     console.log(
-      `${dryRunPrefix}╭─ ${cwd === absWd ? "" : relative(cwd, absWd) + " "}$ ${styleText("cyan", command)}`,
+      `${dryRunPrefix}╭─ ${cwd === absWd ? "" : relative(cwd, absWd) + " "}$ ${styleText(CYAN, command)}`,
     );
     if (child) {
       child.stdout?.on("data", (data) => {
         const lines = data.toString().split("\n");
         for (const line of lines) {
-          process.stdout.write(`${dryRunPrefix}│ ${styleText("dim", line)}`);
+          process.stdout.write(`${dryRunPrefix}│ ${styleText(DIM, line)}`);
         }
       });
       child.stderr?.on("data", (data) => {
         const lines = data.toString().split("\n");
         for (const line of lines) {
-          process.stderr.write(`${dryRunPrefix}│ ${styleText("dim", line)}`);
+          process.stderr.write(`${dryRunPrefix}│ ${styleText(DIM, line)}`);
         }
       });
     }
@@ -74,3 +73,16 @@ export function initLogger(dryRun?: boolean): void {
 }
 
 export let logger: Logger | undefined;
+
+export const RESET = "\x1b[0m";
+export const BOLD = "\x1b[1m";
+export const DIM = "\x1b[2m";
+export const ITALIC = "\x1b[3m";
+export const GREEN = "\x1b[32m";
+export const YELLOW = "\x1b[33m";
+export const CYAN = "\x1b[36m";
+
+/** We don't use `node:util` `styleText` because it doesn't provide colors in github CI. */
+export function styleText(color: string | string[], text: string): string {
+  return `${Array.isArray(color) ? color.join("") : color}${text}${RESET}`;
+}

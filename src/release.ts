@@ -1,6 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, join, relative, resolve } from "node:path";
-import { styleText } from "node:util";
 
 import { createGithubRelease } from "./create-github-release";
 import { detectVersionBump } from "./detect-version-bump";
@@ -8,6 +7,7 @@ import { findPreviousTag } from "./find-previous-tag";
 import { getCurrentVersion } from "./get-current-version";
 import { getGithubRepo } from "./get-github-repo";
 import { getReleaseNotes } from "./get-release-notes";
+import { styleText, GREEN } from "./internal/logger";
 import { initLogger, logger } from "./internal/logger";
 import { run } from "./internal/run";
 import { template } from "./internal/utils";
@@ -591,7 +591,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   const end = performance.now();
   logger?.info("");
   logger?.info(
-    `${styleText("green", "✓")} Release completed in ${((end - start) / 1000).toFixed(3)}s`,
+    `${styleText(GREEN, "✓")} Release completed in ${((end - start) / 1000).toFixed(3)}s`,
   );
 
   return {
