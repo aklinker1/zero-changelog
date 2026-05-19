@@ -22,7 +22,7 @@ export function initLogger(dryRun?: boolean): void {
   };
 
   const section: Logger["section"] = (text) => {
-    console.log(`${dryRunPrefix}\n${dryRunPrefix}${styleText(CYAN, text)}`);
+    console.log(`${dryRunPrefix}\n${dryRunPrefix}${styleText([BOLD, CYAN], text)}`);
   };
 
   const info: Logger["info"] = (message, ...args) => {
@@ -42,14 +42,18 @@ export function initLogger(dryRun?: boolean): void {
     if (child) {
       child.stdout?.on("data", (data) => {
         const lines = data.toString().split("\n");
-        for (const line of lines) {
-          process.stdout.write(`${dryRunPrefix}│ ${styleText(DIM, line)}\n`);
+        for (let i = 0; i < lines.length; i++) {
+          // Skip the last element if it's empty (from trailing newline)
+          if (i === lines.length - 1 && lines[i] === "") continue;
+          process.stdout.write(`${dryRunPrefix}│ ${styleText(DIM, lines[i])}\n`);
         }
       });
       child.stderr?.on("data", (data) => {
         const lines = data.toString().split("\n");
-        for (const line of lines) {
-          process.stderr.write(`${dryRunPrefix}│ ${styleText(DIM, line)}\n`);
+        for (let i = 0; i < lines.length; i++) {
+          // Skip the last element if it's empty (from trailing newline)
+          if (i === lines.length - 1 && lines[i] === "") continue;
+          process.stderr.write(`${dryRunPrefix}│ ${styleText(DIM, lines[i])}\n`);
         }
       });
     }

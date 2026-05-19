@@ -503,7 +503,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     resolved.githubRepo,
   );
   logger?.info("Release notes:");
-  for (const line of releaseNotes.split("\n")) {
+  for (const line of releaseNotes.trim().split("\n")) {
     logger?.detail(line);
   }
 
