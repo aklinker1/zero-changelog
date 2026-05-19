@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { basename, join, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
+import { styleText } from "node:util";
 
 import { createGithubRelease } from "./create-github-release";
 import { detectVersionBump } from "./detect-version-bump";
@@ -10,6 +11,7 @@ import { getReleaseNotes } from "./get-release-notes";
 import { run } from "./internal/run";
 import { template } from "./internal/utils";
 import { listCommitsSince } from "./list-commits-since";
+import { initLogger, logger } from "./logger";
 import { parseChangelog } from "./parse-changelog";
 import { parseCommits } from "./parse-commits";
 import { isPrerelease, parseSemver, type BumpBy } from "./semver";
@@ -239,6 +241,13 @@ export type ReleaseOptions = {
    *
    * If not provided, nothing is ran.
    *
+   * Template vars:
+   *
+   * - `{{version}}`: The version after being bumped.
+   * - `{{tag}}`: The tag that will be used for the release.
+   * - `{{path}}`: The {@link ReleaseOptions#path} relative to the current working directory.
+   * - `{{dirname}}`: The path's base name.
+   *
    * JS Usage:
    *
    * ```ts
@@ -264,6 +273,13 @@ export type ReleaseOptions = {
    *
    * When provided, this command will be ran instead of the regular publishCommands when
    * {@link ReleaseOptions#dryRun} is true.
+   *
+   * Template vars:
+   *
+   * - `{{version}}`: The version after being bumped.
+   * - `{{tag}}`: The tag that will be used for the release.
+   * - `{{path}}`: The {@link ReleaseOptions#path} relative to the current working directory.
+   * - `{{dirname}}`: The path's base name.
    *
    * JS Usage:
    *
@@ -415,72 +431,92 @@ export type ReleaseMeta = {
 };
 
 export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
+  const start = performance.now();
+  initLogger(options.dryRun);
+
+  logger?.title("Release");
+
   // 0. Resolve options
 
-  const {
-    additionalDirs = [],
-    commitTemplate = "chore(release): {{tag}}",
-    dryRun = false,
-    dryRunPublishCommands,
-    publishCommands,
-    releaseNameTemplate = "{{tag}}",
-    versionFiles = ["package.json", "jsr.json", "deno.json", "Cargo.toml"],
-    releaseArtifacts = [],
-    throwOnNoChanges = false,
-    githubToken = process.env.GITHUB_TOKEN,
-    githubRepo = await getGithubRepo(),
-    latestRelease = true,
-  } = options;
+  logger?.section("Resolve options");
+  logger?.info("Input:", options);
 
-  const cwd = process.cwd();
-  const path = options.path ? resolve(options.path) : cwd;
-  const dirname = basename(path);
-  const tagPrefix = path === cwd ? "v" : `${dirname}-v`;
-
-  if (!githubToken) throw Error("No github token provided");
-  if (!githubRepo) throw Error("No github repo provided");
+  const resolved = await resolveOptions(options);
+  logger?.info("Resolved:", resolved);
 
   // 1. Get current version
 
-  const currentVersion = parseSemver(await getCurrentVersion(path, versionFiles));
+  logger?.section("Get current version");
+  const currentVersion = parseSemver(await getCurrentVersion(resolved.path, resolved.versionFiles));
 
   // 2. Collect relevant commits
 
-  const since = options.since ?? (await findPreviousTag(tagPrefix));
-  console.log("Since:", since);
-  const commits = await listCommitsSince({ since, dirs: [path, ...additionalDirs] });
-  console.log("Commits:", commits.length);
+  logger?.section("Collect relevant commits");
+
+  const commits = await listCommitsSince({
+    since: resolved.since,
+    dirs: [resolved.path, ...resolved.additionalDirs],
+  });
+  logger?.info("Commits:", commits.length);
+  for (const commit of commits) {
+    logger?.detail(`${commit.hash.slice(0, 7)} ${commit.subject}`);
+  }
+
   const conventionalCommits = parseCommits(commits);
-  console.log("Conventional commits:", conventionalCommits.length);
+  logger?.info("Conventional commits:", conventionalCommits.length);
+  for (const commit of conventionalCommits) {
+    logger?.detail(`${commit.hash.slice(0, 7)} ${commit.description}`);
+  }
 
   // 3. Bump version
 
+  logger?.section("Bump version");
+
   const bump =
-    (options.bump?.trim() || undefined) ?? detectVersionBump(conventionalCommits, throwOnNoChanges);
-  console.log("Bump:", bump);
+    (options.bump?.trim() || undefined) ??
+    detectVersionBump(conventionalCommits, resolved.throwOnNoChanges);
+  logger?.info("Bump:", bump);
 
   const version = currentVersion.bump(bump);
-  console.log("Version:", version);
+  logger?.info("Version:", version);
 
-  const tag = tagPrefix + version;
-  console.log("Tag:", tag);
+  const tag = resolved.tagPrefix + version;
+  logger?.info("Tag:", tag);
 
-  await updateVersionFiles(path, versionFiles, version);
+  await updateVersionFiles(resolved.path, resolved.versionFiles, version);
+
+  const templateVars = {
+    version,
+    tag,
+    path: resolved.relativePath,
+    dirname: resolved.dirname,
+  };
 
   // 4. Create release notes
 
-  const releaseNotes = getReleaseNotes(conventionalCommits, since, tag, githubRepo);
-  console.log("Release notes:");
-  console.log("---");
-  console.log(releaseNotes);
-  console.log("---");
+  logger?.section("Create release notes");
+
+  const releaseNotes = getReleaseNotes(
+    conventionalCommits,
+    resolved.since,
+    tag,
+    resolved.githubRepo,
+  );
+  logger?.info("Release notes:");
+  for (const line of releaseNotes.split("\n")) {
+    logger?.detail(line);
+  }
 
   // 5. Update changelog
 
-  const changelogPath = join(path, "CHANGELOG.md");
+  logger?.section("Update changelog");
+
   const changelog = parseChangelog(
-    await readFile(changelogPath, "utf8").catch((err) => {
-      if (err.code === "ENOENT") return "";
+    await readFile(resolved.changelogPath, "utf8").catch((err) => {
+      if (err.code === "ENOENT") {
+        logger?.info("No changelog present, it will be added");
+        return "";
+      }
       throw err;
     }),
   );
@@ -488,54 +524,159 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     header: `v${version}`,
     body: releaseNotes,
   });
-  await writeFile(changelogPath, serializeChangelog(changelog), "utf8");
-  console.log("CHANGELOG.md updated");
+  await writeFile(resolved.changelogPath, serializeChangelog(changelog), "utf8");
+  logger?.info(`Updated`);
+  logger?.detail(resolved.changelogPath);
 
   // 6. Commit changes
 
-  const commit = template(commitTemplate, { version, path, dirname, tag });
-  await run({ dryRun, cwd: path, cmd: `git add CHANGELOG.md` });
-  await run({ dryRun, cwd: path, cmd: `git commit -am "${commit}"` });
-  await run({ dryRun, cwd: path, cmd: `git tag ${tag}` });
-  console.log("Changes committed");
+  logger?.section("Commit changes");
 
-  // 7. Run publish script
+  const commit = template(resolved.commitTemplate, templateVars);
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git add CHANGELOG.md` });
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git commit -am "${commit}"` });
+  logger?.info("Changes committed");
 
-  if (dryRun && dryRunPublishCommands?.length) {
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git tag ${tag}` });
+  logger?.info("Tag added");
+
+  // 7. Run publish scripts
+
+  logger?.section("Run publish scripts");
+
+  const publishCommands = options.publishCommands?.map((command) =>
+    template(command, templateVars),
+  );
+  const dryRunPublishCommands = options.dryRunPublishCommands?.map((command) =>
+    template(command, templateVars),
+  );
+
+  if (resolved.dryRun && dryRunPublishCommands?.length) {
     for (const cmd of dryRunPublishCommands) {
-      await run({ dryRun: false, cwd: path, cmd });
+      await run({ cwd: resolved.path, cmd });
     }
   } else if (publishCommands?.length) {
     for (const cmd of publishCommands) {
-      await run({ dryRun, cwd: path, cmd });
+      await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd });
     }
   }
 
   // 8. Push changes
 
-  await run({ dryRun, cwd: path, cmd: "git push" });
-  await run({ dryRun, cwd: path, cmd: "git push --tags" });
-  console.log("Changes pushed");
+  logger?.section("Push changes");
+
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push" });
+  logger?.info("Commits pushed");
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push --tags" });
+  logger?.info("Tag pushed");
 
   // 9. Create release
 
-  const releaseName = template(releaseNameTemplate, { version, tag, path, dirname });
+  logger?.section("Create release");
+
+  const releaseName = template(resolved.releaseNameTemplate, templateVars);
   await createGithubRelease({
-    repo: githubRepo,
-    token: githubToken,
-    dryRun,
+    repo: resolved.githubRepo,
+    token: resolved.githubToken,
+    dryRun: resolved.dryRun,
     tag,
     name: releaseName,
     body: releaseNotes,
-    artifacts: releaseArtifacts,
-    latest: latestRelease,
+    artifacts: resolved.releaseArtifacts,
+    latest: resolved.latestRelease,
     prerelease: isPrerelease(parseSemver(version)),
   });
-  console.log("Release created");
+  logger?.info("Created release on GitHub");
+
+  const end = performance.now();
+  logger?.info("");
+  logger?.info(`${styleText("green", "✓")} Release completed in ${end - start}ms`);
 
   return {
     version,
     tag,
     releaseNotes,
+  };
+}
+
+type ResolvedReleaseOptions = {
+  additionalDirs: string[];
+  bump: BumpBy | undefined;
+  changelogPath: string;
+  commitTemplate: string;
+  cwd: string;
+  dirname: string;
+  dryRun: boolean;
+  dryRunPublishCommands: string[];
+  githubRepo: `${string}/${string}`;
+  githubToken: string;
+  latestRelease: boolean;
+  path: string;
+  publishCommands: string[];
+  relativePath: string;
+  releaseArtifacts: string[];
+  releaseNameTemplate: string;
+  since: string | undefined;
+  tagPrefix: string;
+  throwOnNoChanges: boolean;
+  versionFiles: string[];
+};
+
+async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOptions> {
+  const {
+    additionalDirs = [],
+    bump,
+    commitTemplate = "chore(release): {{tag}}",
+    dryRun = false,
+    latestRelease = true,
+    releaseArtifacts = [],
+    releaseNameTemplate = "{{tag}}",
+    throwOnNoChanges = false,
+    versionFiles = ["package.json", "jsr.json", "deno.json", "Cargo.toml"],
+  } = input;
+
+  const cwd = process.cwd();
+  const path = input.path ? resolve(input.path) : cwd;
+  const dirname = basename(path);
+  const relativePath = relative(cwd, path);
+  const changelogPath = join(path, "CHANGELOG.md");
+  const githubToken = input.githubToken ?? process.env.GITHUB_TOKEN;
+  const githubRepo = input.githubRepo ?? (await getGithubRepo());
+  const publishCommands = input.publishCommands ?? [];
+  const dryRunPublishCommands = input.dryRunPublishCommands ?? [];
+  const tagPrefix = path === cwd ? "v" : `${dirname}-v`;
+  const since = input.since ?? (await findPreviousTag(tagPrefix));
+
+  const errors: string[] = [];
+
+  if (!githubToken)
+    errors.push("GitHub token not provided manually or in the GITHUB_TOKEN env var");
+  if (!githubRepo)
+    errors.push("GitHub repo not provided manually and could not be inferred from your git origin");
+
+  if (errors.length > 0)
+    throw Error("Invalid options:\n" + errors.map((message) => "- " + message).join("\n") + "\n");
+
+  return {
+    additionalDirs,
+    bump,
+    changelogPath,
+    commitTemplate,
+    cwd,
+    dirname,
+    dryRun,
+    dryRunPublishCommands,
+    githubRepo: githubRepo!,
+    githubToken: githubToken!,
+    latestRelease,
+    path,
+    publishCommands,
+    relativePath,
+    releaseArtifacts,
+    releaseNameTemplate,
+    since,
+    tagPrefix,
+    throwOnNoChanges,
+    versionFiles,
   };
 }

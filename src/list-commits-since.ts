@@ -1,12 +1,13 @@
 import type { GitCommit } from "./git-commit";
 import { runGitLog } from "./internal/run-git-log";
+import { logger } from "./logger";
 
 /** List the commits since a ref in specific dirs. */
 export async function listCommitsSince(options: {
   dirs: string[];
   since: string | undefined;
 }): Promise<GitCommit[]> {
-  console.log(
+  logger?.info(
     `Listing commits ${options.since ? "since " + options.since : "for all time"} in:`,
     options.dirs,
   );

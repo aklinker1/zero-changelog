@@ -3,9 +3,10 @@ import { join, relative } from "node:path";
 import { styleText } from "node:util";
 
 import { getVersionRegexFor } from "./internal/version-regex";
+import { logger } from "./logger";
 
 export async function getCurrentVersion(path: string, versionFiles: string[]): Promise<string> {
-  console.log("Getting current version...");
+  logger?.info("Getting current version...");
 
   for (const versionFile of versionFiles) {
     try {
@@ -15,13 +16,13 @@ export async function getCurrentVersion(path: string, versionFiles: string[]): P
       const version = text.match(regex)?.groups?.version;
 
       if (version) {
-        console.log(
+        logger?.info(
           `Found current version (${version}) in ${styleText("cyan", relative(process.cwd(), file))}`,
         );
         return version;
       }
 
-      console.log(`  -> Not found in ${styleText("cyan", relative(process.cwd(), file))}`);
+      logger?.detail(`Not found in ${styleText("cyan", relative(process.cwd(), file))}`);
     } catch (err: any) {
       if (err.code !== "ENOENT") throw err;
     }
