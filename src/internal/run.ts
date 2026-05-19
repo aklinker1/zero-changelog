@@ -11,7 +11,7 @@ export async function run(options: {
 }): Promise<string> {
   if (options.skipped) {
     const done = logger?.command(options.cmd, options.cwd);
-    logger?.info(`${logger?.dryRunPrefix}│ ${styleText(ITALIC, "Skipped")}`);
+    logger?.info(`│ ${styleText(ITALIC, "Skipped")}`);
     done?.();
   }
 
