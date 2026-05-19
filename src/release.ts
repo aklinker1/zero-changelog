@@ -621,7 +621,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     latest: resolved.latestRelease,
     prerelease: isPrerelease(parseSemver(version)),
   });
-  logger?.info("Created release on GitHub");
+  if (!resolved.dryRun) logger?.info("Created release on GitHub");
 
   const end = performance.now();
   logger?.info("");
