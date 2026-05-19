@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.1.11
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.10...v0.1.11)
+
+### 🚀 Features
+
+- Format the logs to look good ([`29c9b43`](https://github.com/aklinker1/zero-changelog/commit/29c9b4302a7abb1bb6a62fa674823cfb91de1ee0))
+- Add PR links to release notes MD ([`009d279`](https://github.com/aklinker1/zero-changelog/commit/009d279db0ba39958618fa4573ae88d41974c307))
+
+### ❤️ Contributors
+
+- Aaron <aaronklinker1@gmail.com>
+
+
 ## v0.1.10
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.9...v0.1.10)
@@ -16,7 +30,6 @@
 ### ❤️ Contributors
 
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.9
 
