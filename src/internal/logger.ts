@@ -56,9 +56,7 @@ export function initLogger(dryRun?: boolean): void {
     }
     return () => {
       const end = performance.now();
-      const seconds = console.log(
-        `${dryRunPrefix}╰─ Done in ${((end - start) / 1000).toFixed(3)}s`,
-      );
+      console.log(`${dryRunPrefix}╰─ Done in ${((end - start) / 1000).toFixed(3)}s`);
     };
   };
 
