@@ -2,7 +2,7 @@ import type { ConventionalCommit } from "./conventional-commit";
 import { sentenceCase } from "./internal/utils";
 import DEFAULT_TYPES from "./semver-types/aklinker1";
 
-const REF_SUFFIX_REGEX = /\(#[0-9]+\)$/;
+const PR_SUFFIX_REGEX = / \(#([0-9]+)\)$/;
 
 export function getReleaseNotes(
   conventionalCommits: ConventionalCommit[],
@@ -34,15 +34,12 @@ export function getReleaseNotes(
     for (const commit of commits) {
       const scope = commit.scope ? `**${commit.scope}**: ` : "";
       const breaking = commit.isBreaking ? "⚠️ " : "";
-      const hash = commit.hash.slice(0, 7);
-      const hashLink = `[\`${hash}\`](https://github.com/${repo}/commit/${commit.hash})`;
-      lines.push(
-        `- ${breaking}${scope}${sentenceCase(commit.description)}${REF_SUFFIX_REGEX.test(commit.description) ? "" : ` (${hashLink})`}`,
-      );
+      const { description, link } = parseDescription(repo, commit);
+      lines.push(`- ${breaking}${scope}${sentenceCase(description)} (${link})`);
 
       if (commit.isBreaking) {
         const footer = commit.footers.find((footer) => footer.key === "breaking change");
-        if (footer) breakingChanges.push(`- ${hashLink}: ${footer.value} `);
+        if (footer) breakingChanges.push(`- ${link}: ${footer.value} `);
       }
     }
     lines.push("");
@@ -75,4 +72,21 @@ export function getReleaseNotes(
   }
 
   return lines.join("\n");
+}
+
+function parseDescription(
+  repo: string,
+  commit: ConventionalCommit,
+): { description: string; link: string } {
+  const pr = commit.description.match(PR_SUFFIX_REGEX)?.[1];
+
+  if (pr) {
+    const link = `[#${pr}](https://github.com/${repo}/pull/${pr})`;
+    const description = commit.description.replace(PR_SUFFIX_REGEX, "");
+    return { description, link };
+  } else {
+    const link = `[\`${commit.hash.slice(0, 7)}\`](https://github.com/${repo}/commit/${commit.hash})`;
+    const description = commit.description;
+    return { description, link };
+  }
 }
