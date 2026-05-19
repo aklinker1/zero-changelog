@@ -590,7 +590,9 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   const end = performance.now();
   logger?.info("");
-  logger?.info(`${styleText("green", "✓")} Release completed in ${end - start}ms`);
+  logger?.info(
+    `${styleText("green", "✓")} Release completed in ${((end - start) / 1000).toFixed(3)}s`,
+  );
 
   return {
     version,
