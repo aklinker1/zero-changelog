@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.12
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.11...v0.1.12)
+
+
 ## v0.1.11
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.10...v0.1.11)
@@ -12,7 +17,6 @@
 ### ❤️ Contributors
 
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.10
 
