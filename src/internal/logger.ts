@@ -43,10 +43,16 @@ export function initLogger(dryRun?: boolean): void {
     );
     if (child) {
       child.stdout?.on("data", (data) => {
-        process.stdout.write(`${dryRunPrefix}│ ${styleText("dim", data.toString())}`);
+        const lines = data.toString().split("\n");
+        for (const line of lines) {
+          process.stdout.write(`${dryRunPrefix}│ ${styleText("dim", line)}`);
+        }
       });
       child.stderr?.on("data", (data) => {
-        process.stderr.write(`${dryRunPrefix}│ ${styleText("dim", data.toString())}`);
+        const lines = data.toString().split("\n");
+        for (const line of lines) {
+          process.stderr.write(`${dryRunPrefix}│ ${styleText("dim", line)}`);
+        }
       });
     }
     return () => {
