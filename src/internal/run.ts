@@ -1,6 +1,6 @@
 import { exec } from "node:child_process";
 
-import { logger } from "../logger";
+import { logger } from "./logger";
 
 /** Run a command, inheriting stdio. Also returns `stdout` */
 export async function run(options: {

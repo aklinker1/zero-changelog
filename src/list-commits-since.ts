@@ -1,6 +1,6 @@
 import type { GitCommit } from "./git-commit";
+import { logger } from "./internal/logger";
 import { runGitLog } from "./internal/run-git-log";
-import { logger } from "./logger";
 
 /** List the commits since a ref in specific dirs. */
 export async function listCommitsSince(options: {

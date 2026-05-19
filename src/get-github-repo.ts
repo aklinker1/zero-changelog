@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 
+import { logger } from "./internal/logger";
 import { waitForChildProcess } from "./internal/wait-for-child-process";
-import { logger } from "./logger";
 
 const REMOTE_REGEX = [
   /^git@github\.com:(?<owner>\S+)\/(?<repo>\S+)\.git$/,

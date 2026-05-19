@@ -2,8 +2,8 @@ import { readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { styleText } from "node:util";
 
+import { logger } from "./internal/logger";
 import { getVersionRegexFor } from "./internal/version-regex";
-import { logger } from "./logger";
 
 export async function getCurrentVersion(path: string, versionFiles: string[]): Promise<string> {
   logger?.info("Getting current version...");

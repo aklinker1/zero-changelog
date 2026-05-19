@@ -1,5 +1,5 @@
+import { logger } from "./internal/logger";
 import { runGitTag } from "./internal/run-git-tag";
-import { logger } from "./logger";
 
 /**
  * Finds the previous tag that starts with a prefix. If there are no previous tags starting with the

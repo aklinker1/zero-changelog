@@ -2,9 +2,9 @@ import { readFile, writeFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { styleText } from "node:util";
 
+import { logger } from "./internal/logger";
 import { replaceRegexGroup } from "./internal/utils";
 import { getVersionRegexFor } from "./internal/version-regex";
-import { logger } from "./logger";
 
 export async function updateVersionFiles(
   path: string,

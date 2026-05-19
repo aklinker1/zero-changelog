@@ -1,5 +1,5 @@
 import type { ConventionalCommit } from "./conventional-commit";
-import { logger } from "./logger";
+import { logger } from "./internal/logger";
 import type { RelativeBump } from "./semver";
 import DEFAULT_TYPES from "./semver-types/aklinker1";
 

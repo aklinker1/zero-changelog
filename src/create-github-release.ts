@@ -1,6 +1,6 @@
 import { createReadStream, ReadStream } from "node:fs";
 
-import { logger } from "./logger";
+import { logger } from "./internal/logger";
 
 type CreateGithubReleaseOptions = {
   repo: `${string}/${string}`;

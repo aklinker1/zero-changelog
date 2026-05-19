@@ -2,7 +2,7 @@ import type { ChildProcess } from "node:child_process";
 import { relative, resolve } from "node:path";
 import { styleText } from "node:util";
 
-import { version } from "../package.json" with { type: "json" };
+import { version } from "../../package.json" with { type: "json" };
 
 export interface Logger {
   title(text: string): void;
