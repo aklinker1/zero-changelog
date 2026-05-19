@@ -1,4 +1,5 @@
 import { exec } from "node:child_process";
+import { styleText } from "node:util";
 
 import { logger } from "./logger";
 
@@ -10,7 +11,7 @@ export async function run(options: {
 }): Promise<string> {
   if (options.skipped) {
     const done = logger?.command(options.cmd, options.cwd);
-    logger?.info("│ Skipped");
+    logger?.info(`${logger?.dryRunPrefix}│ ${styleText("italic", "Skipped")}`);
     done?.();
   }
 

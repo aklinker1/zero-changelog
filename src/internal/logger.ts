@@ -10,6 +10,7 @@ export interface Logger {
   info(message: string, ...args: any[]): void;
   detail(message: string, ...args: any[]): void;
   command(command: string, wd: string, child?: ChildProcess): () => void;
+  dryRunPrefix: string;
 }
 
 export function initLogger(dryRun?: boolean): void {
@@ -23,30 +24,34 @@ export function initLogger(dryRun?: boolean): void {
   };
 
   const section: Logger["section"] = (text) => {
-    console.log(`\n${styleText("cyan", text)}`);
+    console.log(`${dryRunPrefix}\n${dryRunPrefix}${styleText("cyan", text)}`);
   };
 
-  const info: Logger["info"] = console.log;
+  const info: Logger["info"] = (message, ...args) => {
+    console.log(`${dryRunPrefix}${message}`, ...args);
+  };
 
   const detail: Logger["detail"] = (message, ...args) => {
-    console.log(styleText("dim", `  → ${message}`), ...args);
+    console.log(dryRunPrefix + styleText("dim", `  → ${message}`), ...args);
   };
 
   const command: Logger["command"] = (command, wd, child) => {
     const start = performance.now();
     const absWd = resolve(wd);
-    console.log(`╭─ ${cwd === absWd ? "." : "./" + relative(cwd, absWd)} $ ${command}`);
+    console.log(
+      `${dryRunPrefix}╭─ ${cwd === absWd ? "" : relative(cwd, absWd) + " "}$ ${styleText("cyan", command)}`,
+    );
     if (child) {
       child.stdout?.on("data", (data) => {
-        process.stdout.write(data);
+        process.stdout.write(`${dryRunPrefix}│ ${styleText("dim", data.toString())}`);
       });
       child.stderr?.on("data", (data) => {
-        process.stderr.write(data);
+        process.stderr.write(`${dryRunPrefix}│ ${styleText("dim", data.toString())}`);
       });
     }
     return () => {
       const end = performance.now();
-      console.log(`╰─ Done in ${end - start}ms`);
+      console.log(`${dryRunPrefix}╰─ Done in ${end - start}ms`);
     };
   };
 
@@ -56,6 +61,7 @@ export function initLogger(dryRun?: boolean): void {
     info,
     detail,
     command,
+    dryRunPrefix,
   };
 }
 
