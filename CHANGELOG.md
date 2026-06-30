@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.0
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.11...v0.2.0)
+
+### 🚀 Features
+
+- Use GitHub usernames in release notes ([#11](https://github.com/aklinker1/zero-changelog/pull/11))
+
+### 🩹 Fixes
+
+- Change "Release completed in ..." to "Completed in ..." ([`7a557cd`](https://github.com/aklinker1/zero-changelog/commit/7a557cd2dfffe66d0042d7018291522db49ef8e6))
+- Better breaking change summaries ([#12](https://github.com/aklinker1/zero-changelog/pull/12))
+
+### 📖 Documentation
+
+- Update README ([`5e468f9`](https://github.com/aklinker1/zero-changelog/commit/5e468f9267dd78233bc79917bae8f1e89da90deb))
+
+### ⚠️ Breaking Changes
+
+- [#11](https://github.com/aklinker1/zero-changelog/pull/11): Separate arguments for \`getReleaseNotes\` have been
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.1.11
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.10...v0.1.11)
@@ -22,7 +48,6 @@
 
 - github-actions[bot] <github-actions[bot]@users.noreply.github.com>
 - Aaron <aaronklinker1@gmail.com>
-
 
 ## v0.1.10
 
