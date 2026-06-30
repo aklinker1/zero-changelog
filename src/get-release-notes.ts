@@ -1,16 +1,22 @@
 import type { ConventionalCommit } from "./conventional-commit";
+import { getGithubContributors } from "./get-github-contributors";
 import { sentenceCase } from "./internal/utils";
 import DEFAULT_TYPES from "./semver-types/aklinker1";
 
 const PR_SUFFIX_REGEX = / \(#([0-9]+)\)$/;
 
-export function getReleaseNotes(
-  conventionalCommits: ConventionalCommit[],
-  since: string | undefined,
-  tag: string,
-  repo: string,
-): string {
-  const commitsByType = conventionalCommits.reduce<Record<string, ConventionalCommit[]>>(
+export async function getReleaseNotes(options: {
+  conventionalCommits: ConventionalCommit[];
+  since: string | undefined;
+  tag: string;
+  repo: string;
+  /**
+   * GitHub personal access token used to resolve contributor email addresses to GitHub usernames.
+   * When provided, contributors are rendered as `@handle` profile links instead of `Name <email>`.
+   */
+  githubToken?: string;
+}): Promise<string> {
+  const commitsByType = options.conventionalCommits.reduce<Record<string, ConventionalCommit[]>>(
     (acc, commit) => {
       acc[commit.type] ??= [];
       acc[commit.type]!.push(commit);
@@ -22,8 +28,11 @@ export function getReleaseNotes(
   const lines: string[] = [];
   const breakingChanges: string[] = [];
 
-  if (since) {
-    lines.push(`[compare changes](https://github.com/${repo}/compare/${since}...${tag})`, "");
+  if (options.since) {
+    lines.push(
+      `[compare changes](https://github.com/${options.repo}/compare/${options.since}...${options.tag})`,
+      "",
+    );
   }
 
   for (const [type, details] of Object.entries(DEFAULT_TYPES)) {
@@ -34,7 +43,7 @@ export function getReleaseNotes(
     for (const commit of commits) {
       const scope = commit.scope ? `**${commit.scope}**: ` : "";
       const breaking = commit.isBreaking ? "⚠️ " : "";
-      const { description, link } = parseDescription(repo, commit);
+      const { description, link } = parseDescription(options.repo, commit);
       lines.push(`- ${breaking}${scope}${sentenceCase(description)} (${link})`);
 
       if (commit.isBreaking) {
@@ -51,7 +60,7 @@ export function getReleaseNotes(
     lines.push("");
   }
 
-  const authors = conventionalCommits.flatMap((commit) => commit.authors);
+  const authors = options.conventionalCommits.flatMap((commit) => commit.authors);
 
   if (authors.length) {
     const emailNameMap = authors.reduce<Record<string, string>>((acc, author) => {
@@ -59,14 +68,19 @@ export function getReleaseNotes(
       return acc;
     }, {});
 
-    const emails = new Set(
-      conventionalCommits.flatMap((commit) => commit.authors).map((author) => author.email),
-    );
+    const emails = new Set(authors.map((author) => author.email));
     const sortedEmails = Array.from(emails).toSorted((a, b) => b.localeCompare(a));
+
+    const githubHandles = await getGithubContributors(sortedEmails, options?.githubToken);
+
     lines.push("### ❤️ Contributors", "");
     for (const email of sortedEmails) {
-      // TODO: Fetch github profiles.
-      lines.push(`- ${emailNameMap[email]!} <${email}>`);
+      const handle = githubHandles.get(email);
+      if (handle) {
+        lines.push(`- [@${handle}](https://github.com/${handle})`);
+      } else {
+        lines.push(`- ${emailNameMap[email]!} <${email}>`);
+      }
     }
     lines.push("");
   }

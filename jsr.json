@@ -9,6 +9,7 @@
     "./detect-version-bump": "./src/detect-version-bump.ts",
     "./find-previous-tag": "./src/find-previous-tag.ts",
     "./get-current-version": "./src/get-current-version.ts",
+    "./get-github-contributors": "./src/get-github-contributors.ts",
     "./get-github-release": "./src/get-github-release.ts",
     "./get-github-repo": "./src/get-github-repo.ts",
     "./get-release-notes": "./src/get-release-notes.ts",
