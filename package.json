@@ -41,6 +41,10 @@
       "types": "./dist/get-current-version.d.mts",
       "default": "./dist/get-current-version.mjs"
     },
+    "./get-github-contributors": {
+      "types": "./dist/get-github-contributors.d.mts",
+      "default": "./dist/get-github-contributors.mjs"
+    },
     "./get-github-release": {
       "types": "./dist/get-github-release.d.mts",
       "default": "./dist/get-github-release.mjs"

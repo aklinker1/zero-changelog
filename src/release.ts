@@ -527,12 +527,13 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   logger?.section("Create release notes");
 
-  const releaseNotes = getReleaseNotes(
+  const releaseNotes = await getReleaseNotes({
     conventionalCommits,
-    resolved.since,
+    since: resolved.since,
     tag,
-    resolved.githubRepo,
-  );
+    repo: resolved.githubRepo,
+    githubToken: resolved.githubToken,
+  });
   logger?.info("Release notes:");
   for (const line of releaseNotes.trim().split("\n")) {
     logger?.detail(line);
