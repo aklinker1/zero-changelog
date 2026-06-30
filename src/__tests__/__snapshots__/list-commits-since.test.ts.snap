@@ -270,3 +270,38 @@ exports[`listCommitsSince zero-ioc-5217867..e780928.log 1`] = `
   },
 ]
 `;
+
+exports[`listCommitsSince zero-changelog-b352bed..47dfe01.log 1`] = `
+[
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-05-19T16:30:01.000Z,
+    "hash": "7a557cd2dfffe66d0042d7018291522db49ef8e6",
+    "subject": "fix: Change "Release completed in ..." to "Completed in ..."",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-05-19T16:33:30.000Z,
+    "hash": "5e468f9267dd78233bc79917bae8f1e89da90deb",
+    "subject": "docs: Update README",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": "BREAKING CHANGE: Arguments for getReleaseNotes have changed to a single object",
+    "date": 2026-06-30T20:17:29.000Z,
+    "hash": "47dfe01aaf042503d4eb12a8a28e5a8d9097a9ea",
+    "subject": "feat!: Use GitHub usernames in release notes",
+  },
+]
+`;

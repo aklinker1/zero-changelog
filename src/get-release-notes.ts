@@ -41,15 +41,17 @@ export async function getReleaseNotes(options: {
 
     lines.push(`### ${details.title}`, "");
     for (const commit of commits) {
+      console.log(commit);
       const scope = commit.scope ? `**${commit.scope}**: ` : "";
-      const breaking = commit.isBreaking ? "⚠️ " : "";
       const { description, link } = parseDescription(options.repo, commit);
-      lines.push(`- ${breaking}${scope}${sentenceCase(description)} (${link})`);
+      const text = `${scope}${sentenceCase(description)}`;
+      lines.push(`- ${text} (${link})`);
 
       if (commit.isBreaking) {
         const footer = commit.footers.find((footer) => footer.key === "breaking change");
-        if (footer) breakingChanges.push(`- ${link}: ${footer.value} `);
+        breakingChanges.push(footer ? `- ${link}: ${footer.value}` : `- ${text}`);
       }
+      console.log(breakingChanges.length);
     }
     lines.push("");
   }

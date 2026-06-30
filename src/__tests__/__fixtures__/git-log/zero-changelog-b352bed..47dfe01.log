@@ -1,0 +1,4 @@
+47dfe01aaf042503d4eb12a8a28e5a8d9097a9eaAaronaaronklinker1@gmail.com2026-06-30T15:17:29-05:00feat!: Use GitHub usernames in release notesBREAKING CHANGE: Arguments for getReleaseNotes have changed to a single object
+
+5e468f9267dd78233bc79917bae8f1e89da90debAaronaaronklinker1@gmail.com2026-05-19T11:33:30-05:00docs: Update README
+7a557cd2dfffe66d0042d7018291522db49ef8e6Aaronaaronklinker1@gmail.com2026-05-19T11:30:01-05:00fix: Change "Release completed in ..." to "Completed in ..."
