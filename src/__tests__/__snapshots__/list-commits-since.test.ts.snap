@@ -1,5 +1,140 @@
 // Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
+exports[`listCommitsSince vitest-plugin-random-seed-v1.1.2..HEAD.log 1`] = `
+[
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2025-10-23T18:44:23.000Z,
+    "hash": "b28f4dd1452ff02390fda73fc9ccf11936ab99c5",
+    "subject": "Update changelog",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2025-10-24T23:26:27.000Z,
+    "hash": "e48ec92d52906bddca3594c4665be70a71c7203f",
+    "subject": "chore: Upgrade @aklinker1/check",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T14:03:00.000Z,
+    "hash": "ac3ca03f51f629dfe5fd3ec0b97e157ddbb1b76e",
+    "subject": "chore: Upgrade to bun 1.3.14",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T14:03:32.000Z,
+    "hash": "081e9e7400da7a8c4cded79c25a6a61bc8b68a36",
+    "subject": "chore: Update gitignore",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T20:27:19.000Z,
+    "hash": "911e25a5cd577b23356921b2b6484053de656796",
+    "subject": "fix!: Default to \`__TEST_SEED__\` for the constant instead of \`import.meta.test.SEED\`",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": "BREAKING CHANGE: Drop CJS support",
+    "date": 2026-07-09T20:41:32.000Z,
+    "hash": "64e502b3030272607d467c50e94281e3970e34fb",
+    "subject": "chore(upgrade-deps)!: Upgrade all deps, swap old ones for smaller new ones",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T20:57:10.000Z,
+    "hash": "7d1342bdc4df4bbd0172c518161b4d234de7ed17",
+    "subject": "chore: Cleanup tests",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T20:58:50.000Z,
+    "hash": "b1190418d8bd378cf91c206e77893d974860f05d",
+    "subject": "ci: Use \`@aklinker1/zero-changelog\` for publishing",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T21:00:40.000Z,
+    "hash": "58d5f6569752a1c4511c13a0b62cf215303efea2",
+    "subject": "chore: Fix failing build command",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T21:01:31.000Z,
+    "hash": "df49b911cbccc7ae211bff402ce5b19d5fa8160a",
+    "subject": "chore: Upgrade \`oven-sh/setup-bun\`",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T21:04:28.000Z,
+    "hash": "5c4cb715f8a1098bb1e631c49be1bb252a6cac08",
+    "subject": "chore: Fix CI, upgrade github actions",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-07-09T21:06:48.000Z,
+    "hash": "53214408a520039623dba53edb14bb14e8453bf3",
+    "subject": "ci: Remove JSR publishing",
+  },
+  {
+    "author": {
+      "email": "github-actions[bot]@users.noreply.github.com",
+      "name": "github-actions[bot]",
+    },
+    "body": undefined,
+    "date": 2026-07-09T21:08:02.000Z,
+    "hash": "0b5607a78171662dcc9327f46ec30d63a451a5d2",
+    "subject": "chore(release): v2.0.0",
+  },
+]
+`;
+
 exports[`listCommitsSince wxt-analytics-analytics-v0.4.1..analytics-v0.5.0.log 1`] = `
 [
   {
@@ -166,6 +301,41 @@ Co-authored-by: Aaron <aaronklinker1@gmail.com>"
 ]
 `;
 
+exports[`listCommitsSince zero-changelog-b352bed..47dfe01.log 1`] = `
+[
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-05-19T16:30:01.000Z,
+    "hash": "7a557cd2dfffe66d0042d7018291522db49ef8e6",
+    "subject": "fix: Change "Release completed in ..." to "Completed in ..."",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": undefined,
+    "date": 2026-05-19T16:33:30.000Z,
+    "hash": "5e468f9267dd78233bc79917bae8f1e89da90deb",
+    "subject": "docs: Update README",
+  },
+  {
+    "author": {
+      "email": "aaronklinker1@gmail.com",
+      "name": "Aaron",
+    },
+    "body": "BREAKING CHANGE: Arguments for getReleaseNotes have changed to a single object",
+    "date": 2026-06-30T20:17:29.000Z,
+    "hash": "47dfe01aaf042503d4eb12a8a28e5a8d9097a9ea",
+    "subject": "feat!: Use GitHub usernames in release notes",
+  },
+]
+`;
+
 exports[`listCommitsSince zero-ioc-5217867..e780928.log 1`] = `
 [
   {
@@ -267,41 +437,6 @@ exports[`listCommitsSince zero-ioc-5217867..e780928.log 1`] = `
     "date": 2025-04-17T04:56:23.000Z,
     "hash": "e780928d469a73cbd9b0853f3a140610b146f20e",
     "subject": "chore(release): v1.0.1",
-  },
-]
-`;
-
-exports[`listCommitsSince zero-changelog-b352bed..47dfe01.log 1`] = `
-[
-  {
-    "author": {
-      "email": "aaronklinker1@gmail.com",
-      "name": "Aaron",
-    },
-    "body": undefined,
-    "date": 2026-05-19T16:30:01.000Z,
-    "hash": "7a557cd2dfffe66d0042d7018291522db49ef8e6",
-    "subject": "fix: Change "Release completed in ..." to "Completed in ..."",
-  },
-  {
-    "author": {
-      "email": "aaronklinker1@gmail.com",
-      "name": "Aaron",
-    },
-    "body": undefined,
-    "date": 2026-05-19T16:33:30.000Z,
-    "hash": "5e468f9267dd78233bc79917bae8f1e89da90deb",
-    "subject": "docs: Update README",
-  },
-  {
-    "author": {
-      "email": "aaronklinker1@gmail.com",
-      "name": "Aaron",
-    },
-    "body": "BREAKING CHANGE: Arguments for getReleaseNotes have changed to a single object",
-    "date": 2026-06-30T20:17:29.000Z,
-    "hash": "47dfe01aaf042503d4eb12a8a28e5a8d9097a9ea",
-    "subject": "feat!: Use GitHub usernames in release notes",
   },
 ]
 `;

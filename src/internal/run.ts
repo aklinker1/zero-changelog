@@ -20,7 +20,7 @@ export async function run(options: {
     const child = exec(options.cmd, { cwd: options.cwd }, (error) => {
       done?.();
       if (error) reject(error);
-      else resolve(stdout.toString());
+      else resolve(stdout.join(""));
     });
     const stdout: string[] = [];
     child.stdout?.on("data", (data) => {

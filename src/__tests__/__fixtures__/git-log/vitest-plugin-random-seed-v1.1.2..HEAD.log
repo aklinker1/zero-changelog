@@ -1,0 +1,14 @@
+0b5607a78171662dcc9327f46ec30d63a451a5d2github-actions[bot]github-actions[bot]@users.noreply.github.com2026-07-09T21:08:02Zchore(release): v2.0.0
+53214408a520039623dba53edb14bb14e8453bf3Aaronaaronklinker1@gmail.com2026-07-09T16:06:48-05:00ci: Remove JSR publishing
+5c4cb715f8a1098bb1e631c49be1bb252a6cac08Aaronaaronklinker1@gmail.com2026-07-09T16:04:28-05:00chore: Fix CI, upgrade github actions
+df49b911cbccc7ae211bff402ce5b19d5fa8160aAaronaaronklinker1@gmail.com2026-07-09T16:01:31-05:00chore: Upgrade `oven-sh/setup-bun`
+58d5f6569752a1c4511c13a0b62cf215303efea2Aaronaaronklinker1@gmail.com2026-07-09T16:00:40-05:00chore: Fix failing build command
+b1190418d8bd378cf91c206e77893d974860f05dAaronaaronklinker1@gmail.com2026-07-09T15:58:50-05:00ci: Use `@aklinker1/zero-changelog` for publishing
+7d1342bdc4df4bbd0172c518161b4d234de7ed17Aaronaaronklinker1@gmail.com2026-07-09T15:57:10-05:00chore: Cleanup tests
+64e502b3030272607d467c50e94281e3970e34fbAaronaaronklinker1@gmail.com2026-07-09T15:41:32-05:00chore(upgrade-deps)!: Upgrade all deps, swap old ones for smaller new onesBREAKING CHANGE: Drop CJS support
+
+911e25a5cd577b23356921b2b6484053de656796Aaronaaronklinker1@gmail.com2026-07-09T15:27:19-05:00fix!: Default to `__TEST_SEED__` for the constant instead of `import.meta.test.SEED`
+081e9e7400da7a8c4cded79c25a6a61bc8b68a36Aaronaaronklinker1@gmail.com2026-07-09T09:03:32-05:00chore: Update gitignore
+ac3ca03f51f629dfe5fd3ec0b97e157ddbb1b76eAaronaaronklinker1@gmail.com2026-07-09T09:03:00-05:00chore: Upgrade to bun 1.3.14
+e48ec92d52906bddca3594c4665be70a71c7203fAaronaaronklinker1@gmail.com2025-10-24T18:26:27-05:00chore: Upgrade @aklinker1/check
+b28f4dd1452ff02390fda73fc9ccf11936ab99c5Aaronaaronklinker1@gmail.com2025-10-23T13:44:23-05:00Update changelog
