@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.1
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.0...v0.2.1)
+
+### 🩹 Fixes
+
+- Properly join stdout to avoid commas in output strings ([`bda8a68`](https://github.com/aklinker1/zero-changelog/commit/bda8a680b5bcc11814a1de704e3b9d7383037068))
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.2.0
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.1.11...v0.2.0)
@@ -24,7 +37,6 @@
 ### ❤️ Contributors
 
 - [@aklinker1](https://github.com/aklinker1)
-
 
 ## v0.1.11
 
