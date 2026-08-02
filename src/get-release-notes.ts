@@ -41,7 +41,6 @@ export async function getReleaseNotes(options: {
 
     lines.push(`### ${details.title}`, "");
     for (const commit of commits) {
-      console.log(commit);
       const scope = commit.scope ? `**${commit.scope}**: ` : "";
       const { description, link } = parseDescription(options.repo, commit);
       const text = `${scope}${sentenceCase(description)}`;
@@ -51,7 +50,6 @@ export async function getReleaseNotes(options: {
         const footer = commit.footers.find((footer) => footer.key === "breaking change");
         breakingChanges.push(footer ? `- ${link}: ${footer.value}` : `- ${text}`);
       }
-      console.log(breakingChanges.length);
     }
     lines.push("");
   }
