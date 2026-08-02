@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.2
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.1...v0.2.2)
+
+### 🩹 Fixes
+
+- Remove debug `console.log`s ([`9176e1e`](https://github.com/aklinker1/zero-changelog/commit/9176e1ed3be2d37289d1bb4110917e1ba6cf4c19))
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.2.1
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.0...v0.2.1)
@@ -11,7 +24,6 @@
 ### ❤️ Contributors
 
 - [@aklinker1](https://github.com/aklinker1)
-
 
 ## v0.2.0
 
