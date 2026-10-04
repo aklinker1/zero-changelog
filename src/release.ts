@@ -578,7 +578,15 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git commit -am "${commit}"` });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git tag ${tag}` });
 
-  // 7. Run publish scripts
+  // 7. Push changes
+
+  logger?.section("Push changes");
+
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git pull --rebase" });
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push" });
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push --tags" });
+
+  // 8. Run publish scripts
 
   logger?.section("Run publish scripts");
 
@@ -598,13 +606,6 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
       await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd });
     }
   }
-
-  // 8. Push changes
-
-  logger?.section("Push changes");
-
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push" });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push --tags" });
 
   // 9. Create release
 
