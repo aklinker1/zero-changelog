@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.2.3
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.2...v0.2.3)
+
+### 🩹 Fixes
+
+- Push before publish, add a `git pull --rebase` before pushing ([`b5a1162`](https://github.com/aklinker1/zero-changelog/commit/b5a1162083afaea5f9f5fae0173e8ae1d0709f38))
+
+### 🏡 Chore
+
+- Fix checks ([`3c1887b`](https://github.com/aklinker1/zero-changelog/commit/3c1887b3479495b7f7067a7608c24bad66250b0d))
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.2.2
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.1...v0.2.2)
@@ -11,7 +28,6 @@
 ### ❤️ Contributors
 
 - [@aklinker1](https://github.com/aklinker1)
-
 
 ## v0.2.1
 
