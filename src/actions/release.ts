@@ -9,7 +9,7 @@ import { getStringInput } from "./internal/get-string-input";
 
 try {
   const options: NullablyRequired<ReleaseOptions> = {
-    additionalDirs: await getFilesInput("additionalDirs"),
+    additionalDirs: getStringArrayInput("additionalDirs"),
     bump: getStringInput("bump"),
     commitTemplate: getStringInput("commitTemplate"),
     dryRun: getBoolInput("dryRun"),
