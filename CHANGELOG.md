@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.4
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.3...v0.2.4)
+
+### 🩹 Fixes
+
+- Don't treat `additionalDirs` as globs, use them as-is ([`09d02a9`](https://github.com/aklinker1/zero-changelog/commit/09d02a98572900a33a2fcfd2b7a4eb27c20279e8))
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.2.3
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.2...v0.2.3)
@@ -15,7 +28,6 @@
 ### ❤️ Contributors
 
 - [@aklinker1](https://github.com/aklinker1)
-
 
 ## v0.2.2
 
