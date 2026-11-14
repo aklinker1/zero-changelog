@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { join, relative } from "node:path";
+import { relative, resolve } from "node:path";
 
 import { logger, styleText, CYAN } from "./internal/logger";
 import { replaceRegexGroup } from "./internal/utils";
@@ -21,7 +21,7 @@ async function updateVersionFile(
   versionFile: string,
   newVersion: string,
 ): Promise<void> {
-  const file = join(path, versionFile);
+  const file = resolve(path, versionFile);
   const relativePath = relative(process.cwd(), file);
 
   try {

@@ -371,6 +371,9 @@ export type ReleaseOptions = {
    * > expanded when using the JS API. If you use the JS API and want to use glob patterns, [install a
    * > glob pattern library](https://www.npmjs.com/search?q=glob) and call it yourself.
    *
+   * May also be a function returning the paths. It is called right before uploading, after publish
+   * commands have run, so it can find files those commands built.
+   *
    * JS Usage:
    *
    * ```ts
@@ -389,7 +392,7 @@ export type ReleaseOptions = {
    *       file2
    * ```
    */
-  releaseArtifacts?: string[];
+  releaseArtifacts?: string[] | (() => string[] | Promise<string[]>);
 
   /**
    * When `true`, throw an error if no commits contain semver changes. When `false` or `undefined`,
@@ -652,7 +655,7 @@ type ResolvedReleaseOptions = {
   preCommitCommands: string[];
   publishCommands: string[];
   relativePath: string;
-  releaseArtifacts: string[];
+  releaseArtifacts: string[] | (() => string[] | Promise<string[]>);
   releaseNameTemplate: string;
   since: string | undefined;
   tagPrefix: string;

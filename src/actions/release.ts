@@ -18,7 +18,7 @@ try {
     path: getStringInput("path"),
     publishCommands: getStringArrayInput("publishCommands"),
     preCommitCommands: getStringArrayInput("preCommitCommands"),
-    releaseArtifacts: await getFilesInput("releaseArtifacts"),
+    releaseArtifacts: () => getFilesInput("releaseArtifacts").then((files) => files ?? []),
     releaseNameTemplate: getStringInput("releaseNameTemplate"),
     latestRelease: getBoolInput("latestRelease"),
     tagPrefix: getStringInput("tagPrefix"),

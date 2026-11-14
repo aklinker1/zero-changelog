@@ -1,4 +1,5 @@
-import { createReadStream, ReadStream } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { basename } from "node:path";
 
 import { logger } from "./internal/logger";
 
@@ -9,28 +10,29 @@ type CreateGithubReleaseOptions = {
   tag: string;
   name: string;
   body: string;
-  artifacts?: string[];
+  artifacts?: string[] | (() => string[] | Promise<string[]>);
   latest: boolean;
   prerelease: boolean;
 };
 
 export async function createGithubRelease(options: CreateGithubReleaseOptions): Promise<void> {
   logger?.info("Creating GitHub release...");
-  const artifactStreams = await getArtifactStreams(options.artifacts ?? []);
 
   if (options.dryRun) {
     logger?.detail("Skipping");
-  } else {
-    await createRelease(options);
-    if (artifactStreams) await uploadArtifacts(options, artifactStreams);
+    return;
   }
+
+  const releaseId = await createRelease(options);
+
+  // Resolved after the release is created (and publish commands have run) so files built by those
+  // commands are found.
+  const artifacts =
+    typeof options.artifacts === "function" ? await options.artifacts() : (options.artifacts ?? []);
+  await uploadArtifacts(options, releaseId, artifacts);
 }
 
-async function getArtifactStreams(artifacts: string[]): Promise<ReadStream[]> {
-  return Promise.all(artifacts.map((artifact) => createReadStream(artifact)));
-}
-
-async function createRelease(options: CreateGithubReleaseOptions): Promise<void> {
+async function createRelease(options: CreateGithubReleaseOptions): Promise<number> {
   const res = await fetch(`https://api.github.com/repos/${options.repo}/releases`, {
     method: "POST",
     headers: {
@@ -45,7 +47,7 @@ async function createRelease(options: CreateGithubReleaseOptions): Promise<void>
       prerelease: options.prerelease,
     }),
   });
-  if (res.ok) return;
+  if (res.ok) return ((await res.json()) as { id: number }).id;
 
   console.log("Response status: " + res.status);
   console.log("Response body: " + (await res.text()));
@@ -54,26 +56,27 @@ async function createRelease(options: CreateGithubReleaseOptions): Promise<void>
 
 async function uploadArtifacts(
   options: CreateGithubReleaseOptions,
-  artifactStreams: ReadStream[],
+  releaseId: number,
+  artifacts: string[],
 ): Promise<void> {
-  for (const [i, stream] of artifactStreams.entries()) {
-    const artifact = options.artifacts![i];
+  for (const artifact of artifacts) {
+    const name = basename(artifact);
     logger?.detail("Uploading " + artifact);
     const res = await fetch(
-      `https://uploads.github.com/repos/${options.repo}/releases/tags/${options.tag}/assets`,
+      `https://uploads.github.com/repos/${options.repo}/releases/${releaseId}/assets?name=${encodeURIComponent(name)}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/octet-stream",
           Authorization: `Bearer ${options.token}`,
-          "Content-Disposition": `attachment; filename="${artifact}"`,
         },
-        body: stream,
+        body: await readFile(artifact),
       },
     );
     if (!res.ok) {
-      console.error(`Failed to upload`, artifact, res);
-      console.log(await res.text());
+      console.log("Response status: " + res.status);
+      console.log("Response body: " + (await res.text()));
+      throw Error(`Failed to upload release artifact: ${artifact}`);
     }
   }
 }
