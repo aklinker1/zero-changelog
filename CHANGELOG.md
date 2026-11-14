@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.5
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.4...v0.2.5)
+
+### 🩹 Fixes
+
+- **action**: Fix file resolution and artifact uploads ([`f0fa594`](https://github.com/aklinker1/zero-changelog/commit/f0fa5947182e9e0c2ea2f6fd16f63433f811491d))
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.2.4
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.3...v0.2.4)
@@ -11,7 +24,6 @@
 ### ❤️ Contributors
 
 - [@aklinker1](https://github.com/aklinker1)
-
 
 ## v0.2.3
 
