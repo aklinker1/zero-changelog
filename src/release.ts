@@ -572,7 +572,12 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   const commit = template(resolved.commitTemplate, templateVars);
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git add CHANGELOG.md` });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git commit -am "${commit}"` });
+  await run({
+    skipped: resolved.dryRun,
+    cwd: resolved.path,
+    cmd: "git",
+    args: ["commit", "-am", commit],
+  });
 
   // 7. Push changes
 
