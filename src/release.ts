@@ -507,9 +507,7 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   logger?.section("Bump version");
 
-  const bump =
-    (options.bump?.trim() || undefined) ??
-    detectVersionBump(conventionalCommits, resolved.throwOnNoChanges);
+  const bump = resolved.bump ?? detectVersionBump(conventionalCommits, resolved.throwOnNoChanges);
   logger?.info("Bump:", bump);
 
   const version = currentVersion.bump(bump);
@@ -568,45 +566,46 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
 
   logger?.section("Commit changes");
 
-  const preCommitCommands = options.preCommitCommands?.map((command) =>
-    template(command, templateVars),
-  );
-  if (preCommitCommands) {
-    for (const cmd of preCommitCommands) {
-      await run({ cwd: resolved.path, cmd });
-    }
+  for (const command of resolved.preCommitCommands) {
+    const cmd = template(command, templateVars);
+    await run({ cwd: resolved.path, cmd });
   }
 
   const commit = template(resolved.commitTemplate, templateVars);
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git add CHANGELOG.md` });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git commit -am "${commit}"` });
+  await run({
+    skipped: resolved.dryRun,
+    cwd: resolved.path,
+    cmd: "git",
+    args: ["commit", "-am", commit],
+  });
 
   // 7. Push changes
 
   logger?.section("Push changes");
 
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git pull --rebase" });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git tag ${tag}` });
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git", args: ["tag", tag] });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push" });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push --tags" });
+  await run({
+    skipped: resolved.dryRun,
+    cwd: resolved.path,
+    cmd: "git",
+    args: ["push", "origin", `refs/tags/${tag}`],
+  });
 
   // 8. Run publish scripts
 
   logger?.section("Run publish scripts");
 
-  const publishCommands = options.publishCommands?.map((command) =>
-    template(command, templateVars),
-  );
-  const dryRunPublishCommands = options.dryRunPublishCommands?.map((command) =>
-    template(command, templateVars),
-  );
-
-  if (resolved.dryRun && dryRunPublishCommands?.length) {
-    for (const cmd of dryRunPublishCommands) {
+  if (resolved.dryRun && resolved.dryRunPublishCommands.length) {
+    for (const command of resolved.dryRunPublishCommands) {
+      const cmd = template(command, templateVars);
       await run({ cwd: resolved.path, cmd });
     }
-  } else if (publishCommands?.length) {
-    for (const cmd of publishCommands) {
+  } else {
+    for (const command of resolved.publishCommands) {
+      const cmd = template(command, templateVars);
       await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd });
     }
   }
@@ -672,7 +671,6 @@ type ResolvedReleaseOptions = {
 async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOptions> {
   const {
     additionalDirs = [],
-    bump,
     commitTemplate = "chore(release): {{tag}}",
     dryRun = false,
     latestRelease = true,
@@ -682,6 +680,7 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
     versionFiles = ["package.json", "jsr.json", "deno.json", "Cargo.toml"],
   } = input;
 
+  const bump = input.bump?.trim() || undefined;
   const cwd = process.cwd();
   const path = input.path ? resolve(input.path) : cwd;
   const dirname = basename(path);
