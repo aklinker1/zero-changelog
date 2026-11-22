@@ -25,6 +25,9 @@ bun add @aklinker1/zero-changelog
 
 ## Options
 
+If no previous tag matches, the first release includes the entire git history in its changelog
+unless you set `since`.
+
 Refer to the API reference:
 
 - [Release](https://jsr.io/@aklinker1/zero-changelog/doc/release/~/ReleaseOptions)
