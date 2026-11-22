@@ -9,18 +9,21 @@ export async function updateVersionFiles(
   path: string,
   versionFiles: string[],
   newVersion: string,
-): Promise<void> {
+): Promise<string[]> {
   logger?.info("Updating version...");
+  const updated: string[] = [];
   for (const versionFile of versionFiles) {
-    await updateVersionFile(path, versionFile, newVersion);
+    const file = await updateVersionFile(path, versionFile, newVersion);
+    if (file) updated.push(file);
   }
+  return updated;
 }
 
 async function updateVersionFile(
   path: string,
   versionFile: string,
   newVersion: string,
-): Promise<void> {
+): Promise<string | undefined> {
   const file = resolve(path, versionFile);
   const relativePath = relative(process.cwd(), file);
 
@@ -33,6 +36,7 @@ async function updateVersionFile(
     await writeFile(file, newText, "utf8");
 
     logger?.detail(`${styleText(CYAN, relativePath)} updated`);
+    return file;
   } catch (err: any) {
     // Ignore missing files
     if (err.code === "ENOENT") {
