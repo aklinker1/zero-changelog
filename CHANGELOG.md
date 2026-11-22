@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.2.7
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.6...v0.2.7)
+
+### 🩹 Fixes
+
+- Redact GitHub token from debug logs ([#15](https://github.com/aklinker1/zero-changelog/pull/15))
+- Compare paths via relative() when detecting the root directory ([#18](https://github.com/aklinker1/zero-changelog/pull/18))
+- Run git commit without a shell ([`be5f42c`](https://github.com/aklinker1/zero-changelog/commit/be5f42c85e775a2f1cdaf5c50736d760bf062289))
+- Push only the release tag instead of all tags ([#26](https://github.com/aklinker1/zero-changelog/pull/26))
+
+### 💅 Refactors
+
+- Assert required options instead of using non-null assertions ([#19](https://github.com/aklinker1/zero-changelog/pull/19))
+- Read bump and commands from resolved options ([`69a843a`](https://github.com/aklinker1/zero-changelog/commit/69a843a6d813871322305a5a52f88e8a61e31a09))
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.2.6
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.5...v0.2.6)
@@ -11,7 +32,6 @@
 ### ❤️ Contributors
 
 - [@aklinker1](https://github.com/aklinker1)
-
 
 ## v0.2.5
 
