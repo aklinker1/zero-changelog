@@ -473,10 +473,10 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   // 0. Resolve options
 
   logger?.section("Resolve options");
-  logger?.info("Input:", options);
+  logger?.info("Input:", redactSecrets(options));
 
   const resolved = await resolveOptions(options);
-  logger?.info("Resolved:", resolved);
+  logger?.info("Resolved:", redactSecrets(resolved));
 
   // 1. Get current version
 
@@ -637,6 +637,11 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
     tag,
     releaseNotes,
   };
+}
+
+function redactSecrets<T extends { githubToken?: string }>(options: T): T {
+  if (!options.githubToken) return options;
+  return { ...options, githubToken: "***" };
 }
 
 type ResolvedReleaseOptions = {
