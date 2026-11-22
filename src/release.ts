@@ -579,13 +579,13 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   const commit = template(resolved.commitTemplate, templateVars);
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git add CHANGELOG.md` });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git commit -am "${commit}"` });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git tag ${tag}` });
 
   // 7. Push changes
 
   logger?.section("Push changes");
 
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git pull --rebase" });
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git tag ${tag}` });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push" });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push --tags" });
 
