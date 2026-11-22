@@ -1,3 +1,4 @@
+import assert from "node:assert";
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, join, relative, resolve } from "node:path";
 
@@ -473,10 +474,10 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   // 0. Resolve options
 
   logger?.section("Resolve options");
-  logger?.info("Input:", options);
+  logger?.info("Input:", redactSecrets(options));
 
   const resolved = await resolveOptions(options);
-  logger?.info("Resolved:", resolved);
+  logger?.info("Resolved:", redactSecrets(resolved));
 
   // 1. Get current version
 
@@ -639,6 +640,11 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   };
 }
 
+function redactSecrets<T extends { githubToken?: string }>(options: T): T {
+  if (!options.githubToken) return options;
+  return { ...options, githubToken: "***" };
+}
+
 type ResolvedReleaseOptions = {
   additionalDirs: string[];
   bump: BumpBy | undefined;
@@ -686,7 +692,7 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
   const publishCommands = input.publishCommands ?? [];
   const dryRunPublishCommands = input.dryRunPublishCommands ?? [];
   const preCommitCommands = input.preCommitCommands ?? [];
-  const tagPrefix = path === cwd ? "v" : `${dirname}-v`;
+  const tagPrefix = relativePath === "" ? "v" : `${dirname}-v`;
   const since = input.since ?? (await findPreviousTag(tagPrefix));
 
   const errors: string[] = [];
@@ -699,6 +705,8 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
   if (errors.length > 0)
     throw Error("Invalid options:\n" + errors.map((message) => "- " + message).join("\n") + "\n");
 
+  assert(githubToken && githubRepo);
+
   return {
     additionalDirs,
     bump,
@@ -708,8 +716,8 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
     dirname,
     dryRun,
     dryRunPublishCommands,
-    githubRepo: githubRepo!,
-    githubToken: githubToken!,
+    githubRepo,
+    githubToken,
     latestRelease,
     path,
     preCommitCommands,
