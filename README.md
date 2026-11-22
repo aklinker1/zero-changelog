@@ -123,6 +123,11 @@ await release({
 Otherwise stable versions will remain stable, unstable will remain unstable, and prereleases will
 remain prereleases.
 
+## First Release
+
+If no previous tag matches, the first release includes the entire git history in its changelog
+unless you set `since`.
+
 ## TODO
 
 - [x] Structure for package + action
