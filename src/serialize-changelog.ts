@@ -1,12 +1,17 @@
 import type { ChangelogSection } from "./changelog-section";
 import { parseSemver } from "./semver";
 
+/** Headers are tags (`v1.0.0`, `pkg-v1.0.0`), so drop everything before the first digit. */
+function stripTagPrefix(header: string): string {
+  return header.replace(/^\D*/, "");
+}
+
 export function serializeChangelog(sections: ChangelogSection[]): string {
   const parts = ["# Changelog"];
 
   const ordered = sections.sort((a, b) => {
-    const aV = a.header.slice(1);
-    const bV = b.header.slice(1);
+    const aV = stripTagPrefix(a.header);
+    const bV = stripTagPrefix(b.header);
     try {
       const aSemver = parseSemver(aV);
       try {

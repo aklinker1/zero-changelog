@@ -45,5 +45,16 @@ describe("serializeChangelog", () => {
 
       expect(actual).toEqual(expected);
     });
+
+    it("should sort headers with multi-character tag prefixes", () => {
+      const sections: ChangelogSection[] = [
+        { header: "pkg-v1.0.0", body: "two" },
+        { header: "pkg-v1.0.1", body: "one" },
+      ];
+
+      const actual = serializeChangelog(sections);
+
+      expect(actual.indexOf("## pkg-v1.0.1")).toBeLessThan(actual.indexOf("## pkg-v1.0.0"));
+    });
   });
 });
