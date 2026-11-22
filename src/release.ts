@@ -686,7 +686,7 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
   const publishCommands = input.publishCommands ?? [];
   const dryRunPublishCommands = input.dryRunPublishCommands ?? [];
   const preCommitCommands = input.preCommitCommands ?? [];
-  const tagPrefix = path === cwd ? "v" : `${dirname}-v`;
+  const tagPrefix = relativePath === "" ? "v" : `${dirname}-v`;
   const since = input.since ?? (await findPreviousTag(tagPrefix));
 
   const errors: string[] = [];
