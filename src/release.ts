@@ -598,9 +598,14 @@ export async function release(options: ReleaseOptions): Promise<ReleaseMeta> {
   logger?.section("Push changes");
 
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git pull --rebase" });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: `git tag ${tag}` });
+  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git", args: ["tag", tag] });
   await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push" });
-  await run({ skipped: resolved.dryRun, cwd: resolved.path, cmd: "git push --tags" });
+  await run({
+    skipped: resolved.dryRun,
+    cwd: resolved.path,
+    cmd: "git",
+    args: ["push", "origin", `refs/tags/${tag}`],
+  });
 
   // 8. Run publish scripts
 
