@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.6
+
+[compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.5...v0.2.6)
+
+### 🩹 Fixes
+
+- Add tag after `git pull --rebase` so it lands on `main` ([`40f84c6`](https://github.com/aklinker1/zero-changelog/commit/40f84c636fe2a1cfe2a9fc72557d2baec15139c3))
+
+### ❤️ Contributors
+
+- [@aklinker1](https://github.com/aklinker1)
+
+
 ## v0.2.5
 
 [compare changes](https://github.com/aklinker1/zero-changelog/compare/v0.2.4...v0.2.5)
@@ -11,7 +24,6 @@
 ### ❤️ Contributors
 
 - [@aklinker1](https://github.com/aklinker1)
-
 
 ## v0.2.4
 
