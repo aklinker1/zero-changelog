@@ -1,3 +1,4 @@
+import assert from "node:assert";
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, join, relative, resolve } from "node:path";
 
@@ -699,6 +700,8 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
   if (errors.length > 0)
     throw Error("Invalid options:\n" + errors.map((message) => "- " + message).join("\n") + "\n");
 
+  assert(githubToken && githubRepo);
+
   return {
     additionalDirs,
     bump,
@@ -708,8 +711,8 @@ async function resolveOptions(input: ReleaseOptions): Promise<ResolvedReleaseOpt
     dirname,
     dryRun,
     dryRunPublishCommands,
-    githubRepo: githubRepo!,
-    githubToken: githubToken!,
+    githubRepo,
+    githubToken,
     latestRelease,
     path,
     preCommitCommands,
